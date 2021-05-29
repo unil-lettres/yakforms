@@ -1,0 +1,28 @@
+version: '3'
+services:
+  proxy:
+    image: nginx:alpine
+    depends_on:
+      - yakforms
+    volumes:
+      - ./conf/nginx/nginx_default.conf:/etc/nginx/conf.d/default.conf:ro
+      - yakforms:/var/www/html:ro
+    ports:
+      - 80:80
+
+  yakforms:
+    image: nouts/yakforms:v1.1-fpm-alpine
+    depends_on:
+      - database
+    volumes:
+      - yakforms:/var/www/html
+
+  postgres:
+    image: postgres:13.3-alpine
+    environment:
+      POSTGRES_DB: yakforms
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+
+volumes:
+  yakforms:

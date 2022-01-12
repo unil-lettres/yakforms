@@ -1,0 +1,15 @@
+FROM drupal:7-fpm-alpine
+
+ARG VERSION=develop
+
+RUN rm -r /var/www/html && mkdir /var/www/html && curl https://framagit.org/yakforms/yakforms/-/archive/$VERSION/yakforms-$VERSION.tar.gz -o /tmp/yakforms-$VERSION.tar.gz
+RUN tar -xvf /tmp/yakforms-$VERSION.tar.gz --strip-components=1 -C /var/www/html
+RUN cp -p /var/www/html/sites/default/default.settings.php /var/www/html/sites/default/settings.php
+RUN mkdir /var/www/html/sites/default/files 
+RUN chmod 777 /var/www/html/sites/default/settings.php /var/www/html/sites/default/files 
+#&& chmod -R 700 /var/www/html/sites/default
+#RUN sed -i "s/^\$databases = array();/\$databases = array (\n  'default' =>\n  array (\n    'default' =>\n    array (\n      'database' => '$YAKFORMS_DB',\n      'username' => '$YAKFORMS_DB_USER',\n      'password' => '$YAKFORMS_DB_PASSWORD',\n      'host' => '$YAKFORMS_DB_HOSTNAME',\n      'port' => '$YAKFORMS_DB_PORT',\n      'driver' => 'pgsql',\n      'prefix' => '',\n    ),\n  ),\n);/" /var/www/html/sites/default/settings.php 
+
+#RUN curl https://framagit.org/yakforms/yakforms/-/archive/$VERSION/yakforms-$VERSION.tar.gz?path=profiles/yakforms_profile -o /tmp/yakforms-$VERSION.tar.gz && \
+    # tar -xvf /tmp/yakforms-$VERSION.tar.gz --strip-components=2 -C /var/www/html/profiles/ && \
+    # rm -r /tmp/*

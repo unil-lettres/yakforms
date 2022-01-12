@@ -11,18 +11,16 @@ services:
       - 80:80
 
   yakforms:
-    image: nouts/yakforms:v1.1-fpm-alpine
+    image: nouts/yakforms:v1.1-fpm
     depends_on:
-      - database
+      - db
     volumes:
       - yakforms:/var/www/html
 
-  postgres:
-    image: postgres:13.3-alpine
-    environment:
-      POSTGRES_DB: yakforms
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
+  db:
+    image: postgres:13-alpine
+    env_file:
+      - .env
 
 volumes:
   yakforms:

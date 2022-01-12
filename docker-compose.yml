@@ -11,7 +11,7 @@ services:
       - 80:80
 
   yakforms:
-    image: nouts/yakforms:v1.1-fpm
+    image: nouts/yakforms:${YAKFORMS_VERSION}-fpm
     depends_on:
       - db
     volumes:

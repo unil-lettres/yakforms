@@ -63,7 +63,7 @@ When you first access the application, you will be redirected to the installatio
 
 ## 2. Then, configure the admin account
 
-## 3. Add French language & make it the default language
+## 3. Add French & make it the default language
 
 Use the following path: `/admin/config/regional/language`
 
@@ -82,10 +82,6 @@ Use the following path: `/admin/appearance`
 ## 6. Update general information & create default pages
 
 Use the following path: `/admin/config/system/yakforms`
-
-## 7. Disable errors for users
-
-Use the following path: `/admin/people/permissions`
 
 ## 8. Activate & configure modules
 

@@ -1,71 +1,95 @@
-# Installation
-## Manual build (optionnal)
+# Information
 
-This will build 3 flavors of docker images :
-- yakforms:latest
-- yakforms:latest-fpm
-- yakforms:latest-fpm-alpine
+Docker configuration for the [Yakforms](https://framagit.org/yakforms/yakforms) project. This is a Drupal 7 / PHP 7.4 app that allows you to create simple forms, and to collect and analyze responses.
 
-fpm version is needed to run with nginx, in docker-compose.yml.
+It is not actively maintained anymore, we'll keep the stack frozen until a better solution is found.
+- https://framacolibri.org/t/yakforms-migration-sur-drupal-9/17286
+- https://framacolibri.org/t/updating-an-outdated-technology-stack-and-feature-timeline/17166
 
-fpm-alpine is a lightweight alternative.
+# Development with Docker
 
-latest is currently useless but it's vanilla drupal, which might be useful to someone, I don't know ¯\_(ツ)_/¯
+## Docker installation
 
+A working [Docker](https://docs.docker.com/engine/install/) installation is mandatory.
 
-Clone this repo and run 
-```
-chmod +x docker-build.sh
-./docker-build.sh
-```
+## Docker environment file
 
-To change Yakforms version, edit `docker-build.sh`.
+Please make sure to copy & rename the **example.env** file to **.env**.
 
-## Run
+``cp example.env .env``
 
-If you have skipped manual build and didn't clone this repo, download required files :
-```
-mkdir -p yakforms/nginx && cd yakforms/
-curl -L -o nginx/default.conf "https://framagit.org/gnouts/yakforms-docker/-/raw/master/conf/nginx/nginx_default.conf"
-curl -L -o docker-compose.yml "https://framagit.org/gnouts/yakforms-docker/-/raw/master/docker-compose.yml"
-```
+You can replace the values if needed to match you server & environment.
 
-Then, download the default environment file :
-```
-curl -L -o .env "https://framagit.org/gnouts/yakforms-docker/-/raw/master/env.prod.sample"
-```
+### Build & run
 
-Edit the configuration file `.env`
+Build & run all the containers for this project.
 
-Launch yakforms :
-```
-docker-compose up -d
-```
+``docker-compose up`` (add -d if you want to run in the background and silence the logs)
 
+### Frontends
 
-## First setup
+To access the main application please use the following link.
 
-By default, yakforms will be available on http://localhost:80/ (you can set a proxy in front if needed).
+http://localhost:8787
 
-You will need to complete first setup of Drupal and provided some information :
+The first time you access the application, you will be redirected to the installation page (see below for the installation instructions).
 
-- visit http://localhost:80/
-- (yakforms_profile is automatically selected (look at your url), so you should already be on the second step ("Choose language"), otherwise select yakforms_profile and continue)
-- Select "Postgres" as database type. Fill next fields with the value you set in the `.env` file.
-- Click "Advanced" to reveal the field "Database host" and fill it with `db`. Save and continue.
-- Once Drupal installation finished, click on "Modules", scroll to the bottom and select `yakforms-feature`. Click "Save configuration" to install it (and accept all dependencies modules)
-- Then, go back to "Modules", select `yakforms`, "Save configuration".
+# Deployment with Docker
 
-You have a basic Yakforms installation.
+Copy & rename the **docker-compose.override.yml.prod** file to **docker-compose.override.yml**.
 
-Then you can install other yakform modules using same steps as above.
+`cp docker-compose.override.yml.prod docker-compose.override.yml`
 
-And configure email and such, following official documentation.
+You can replace the values if needed, but the default ones should work for production.
 
-# Update
+Build & run all the containers for this project:
 
-Change `YAKFORMS_VERSION` in your `.env` file.
+`docker-compose up -d`
 
-```
-docker-compose up -d
-```
+Use a reverse proxy configuration to map the url to port `8787`.
+
+# Installation instructions
+
+When you first access the application, you will be redirected to the installation page.
+
+## 1. Database configuration
+- Choose PostgreSQL
+- Add connection parameters (report values from the .env file, below are default development values)
+  - Database name: yakforms
+  - Username: user
+  - Password: password
+  - Host: yakforms-postgres
+  - Port: 5432
+
+## 2. Then, configure the admin account
+
+## 3. Add French language & make it the default language
+
+Use the following path: `/admin/config/regional/language`
+
+## 4. Activate Yakforms modules
+
+Use the following path: `/admin/modules`
+
+- "yakforms-feature"
+- "Yakforms"
+- "Yakforms Public Results" & "Yakforms Share Results"
+
+## 5. Activate the Yakforms "Lettres" theme, make it the default & use it also for admin
+
+Use the following path: `/admin/appearance`
+
+## 6. Update general information & create default pages
+
+Use the following path: `/admin/config/system/yakforms`
+
+## 7. Disable errors for users
+
+Use the following path: `/admin/people/permissions`
+
+## 8. Activate & configure modules
+
+Use the following path: `/admin/modules`
+
+- "SMTP Authentication Support"
+- If needed also "Active Directory Integration / LDAP Integration - NTLM & Kerberos Login"

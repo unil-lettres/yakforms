@@ -1,26 +1,56 @@
 version: '3'
+
+networks:
+  yakforms-net:
+    driver: bridge
+
+name: yakforms
+
 services:
-  proxy:
-    image: nginx:alpine
+  yakforms-web:
+    image: nginx:1.25-alpine
     depends_on:
-      - yakforms
+      - yakforms-app
     volumes:
+      - app-data:/var/www/html:ro
       - ./conf/nginx/nginx_default.conf:/etc/nginx/conf.d/default.conf:ro
-      - yakforms:/var/www/html:ro
+      - ./theme:/var/www/html/profiles/yakforms_profile/themes/yaktheme_ltr:ro
+      - ./modules:/var/www/html/sites/all/modules:ro
+      - ./libraries:/var/www/html/sites/all/libraries:ro
     ports:
-      - 80:80
-
-  yakforms:
-    image: nouts/yakforms:${YAKFORMS_VERSION}-fpm
+      - "127.0.0.1:8787:80"
+    networks:
+      - yakforms-net
+    container_name: yakforms-web
+  yakforms-app:
+    image: unillett/yakforms:latest
+    build:
+      context: ./
+      dockerfile: ./app.dockerfile
+    env_file:
+      - .env
     depends_on:
-      - db
+      - yakforms-postgres
     volumes:
-      - yakforms:/var/www/html
-
-  db:
+      - app-data:/var/www/html
+      - ./modules:/var/www/html/sites/all/modules/
+      - ./libraries:/var/www/html/sites/all/libraries/
+      - ./theme:/var/www/html/profiles/yakforms_profile/themes/yaktheme_ltr/
+    networks:
+      - yakforms-net
+    container_name: yakforms-app
+  yakforms-postgres:
     image: postgres:13-alpine
     env_file:
       - .env
+    ports:
+      - "127.0.0.1:5454:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - yakforms-net
+    container_name: yakforms-postgres
 
 volumes:
-  yakforms:
+  app-data:
+  postgres-data:

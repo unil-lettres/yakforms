@@ -1,6 +1,6 @@
 # Information
 
-Docker configuration for the [Yakforms](https://framagit.org/yakforms/yakforms) project. This is a Drupal 7 / PHP 7.4 app that allows you to create simple forms, and to collect and analyze responses.
+Docker configuration for the [Yakforms](https://framagit.org/yakforms/yakforms) project. This is a Drupal 7 / PHP 7.4 app that allows you to create simple forms, collect and analyze responses.
 
 It is not actively maintained anymore, we'll keep the stack frozen until a better solution is found.
 - https://framacolibri.org/t/yakforms-migration-sur-drupal-9/17286
@@ -54,7 +54,7 @@ When you first access the application, you will be redirected to the installatio
 
 ## 1. Database configuration
 - Choose PostgreSQL
-- Add connection parameters (report values from the .env file, below are default development values)
+- Add connection parameters (report values from the .env file, below are the default development values)
   - Database name: yakforms
   - Username: user
   - Password: password

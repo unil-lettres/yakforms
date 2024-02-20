@@ -1,0 +1,75 @@
+body {
+    --c-bg: #fefffe; /* p1 */
+}
+
+#highlighted {
+    background: #05a69d;
+
+    .dropdown button:not(.button):hover,
+    .dropdown button:not(.button):focus {
+        background: #07BBB2FF;
+    }
+}
+
+#main {
+    --c-title: #05a69d; /* p8 */
+    --c-highlighted: #d9fdfb; /* p1 */
+
+    --c-link: #05a69d; /* p7 */
+    --c-link-hover: #07BBB2FF; /* p6 */
+
+    --c-bd-primary: #05a69d; /* p7 */
+    --c-bd-page: #07BBB2FF; /* p6 */
+
+    --c-primary: #05a69d; /* p8 */
+    --c-primary-dark: #05a69d; /* p9 */
+
+    --c-bd-active: #07BBB2FF; /* p6 */
+    --c-bg-checked: #05a69d; /* p8 */
+
+    --c-outline-shadow: #d9fdfb; /* p2 + alpha */
+}
+
+#block-yakforms-yakforms-create-form {
+    background-color: #07BBB2FF;
+    border: #079f95 solid 2px;
+}
+
+.form-item .form-managed-file {
+    background: #d6d9e1;
+}
+
+.form-item .form-managed-file::before {
+    width: 30px;
+    height: 30px;
+}
+
+.button {
+    background: #505569;
+    border: #444859;
+}
+
+.button:hover {
+    background: #646a83;
+}
+
+.dropdown-menu > li > a:hover {
+    background-color: #f5f5f5 !important;
+}
+
+/* Homepage */
+
+.front #intro .buttons {
+    margin: 10rem 1rem
+}
+
+.front #intro .buttons .btn {
+    line-height: 2.5;
+    width: 20rem;
+}
+
+.front #intro::after,
+.front #intro::before{
+    background-image: none;
+    content: none;
+}

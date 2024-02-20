@@ -1,0 +1,228 @@
+.mo_ldap_table_layout_1
+{
+	background-color:#e0e0d8 !important;
+	width: 97% !important;
+	padding:2% !important;
+	overflow: hidden;
+}
+.mo_ldap_container {
+	width: 59%;
+	padding: 25px;
+	border-radius: 4px !important;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	margin-left: auto;
+	margin-right: auto;
+	float: left;
+}
+.mo_ldap_enable_extension_message{
+	display: block;
+	text-align: center;
+	font-size: 14px;
+	border-radius: 10px;
+	border: 1px solid #fb9a9a;
+	color: red;
+	background-color: rgba(255,0,0,0.1);
+	padding: 8px;
+	margin-top: 15px;
+}
+.mo_ldap_highlight_background_note{
+	background-color: #e0e0e0;
+	border-radius: 4px;
+	padding: 0.55em;
+	width: 98%;
+}
+#button_config_center{
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+	border-radius: 4px;
+	background: #337ab7;
+	color: #ffffff;
+	text-shadow: 0 -1px 1px #337ab7, 1px 0 1px #337ab7, 0 1px 1px #337ab7, -1px 0 1px #337ab7;
+	box-shadow: 0 1px 0 #337ab7;
+	border-color: #337ab7 #337ab7 #337ab7;
+}
+#button_config{
+	border-radius: 4px;
+	background: #337ab7;
+	color: #ffffff;
+	text-shadow: 0 -1px 1px #337ab7, 1px 0 1px #337ab7, 0 1px 1px #337ab7, -1px 0 1px #337ab7;
+	box-shadow: 0 1px 0 #337ab7;
+	border-color: #337ab7 #337ab7 #337ab7;
+}
+
+.mo_ldap_table_layout_support_1{
+	border-radius: 4px;
+	position: relative;
+	width: 350px;
+	border: 1px solid #CCCCCC;
+	padding: 15px 20px 17px 20px;
+	background-color: white;
+}
+.mo_saml_container
+{
+	border-radius: 4px !important;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	width: 29%;
+	padding:25px;
+	float: right;
+}
+#mo_ldap_server{
+	width: 70%;
+	padding: 8px 12px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	 border-radius: 4px; 
+	box-sizing: border-box;
+}
+#firstname{
+    width: 70%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	 border-radius: 4px; 
+	box-sizing: border-box;
+}
+#test_username{
+    width: 70%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	 border-radius: 4px; 
+	box-sizing: border-box;
+}
+#test_password{
+    width: 70%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	 border-radius: 4px; 
+	box-sizing: border-box;
+}
+
+#miniorange_ldap_dropdown, #text_field{
+	box-sizing: border-box !important;
+	padding: 0.3em 0.4em 0.3em 0.5em !important;
+	border: 1px solid #b8b8b8 !important;
+	border-top-color: #999 !important;
+	border-radius: 2px !important;
+	background: #fcfcfa !important;
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.125) !important;
+}
+
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.my-form-class{
+	border: none;
+	padding: 2px 12px;
+
+	text-decoration: none;
+	display: inline-block;
+	border-radius: 8px;
+	font-size: 16px;
+
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: '';
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.mo_ldap_table_layout {
+	background-color:#FFFFFF; 
+	border:1px solid #CCCCCC; 
+
+	margin-bottom: 10px;
+}
+.mo_ldap_table_layout input[type=text] {
+	width: 80%;
+}
+
+.form-textarea{
+
+	padding: 2px !important;
+	box-sizing: border-box !important;
+	padding: 0.3em 0.4em 0.3em 0.5em !important;
+	border: 1px solid #b8b8b8 !important;
+	border-top-color: #999 !important;
+	border-radius: 2px !important;
+	background: #fcfcfa !important;
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.125) !important;
+}
+
+@media only screen and (max-width:641px) { .form-textarea { width:100% !important;}}
+
+.form-text{
+	padding: 2px !important;
+	box-sizing: border-box !important;
+	padding: 0.3em 0.4em 0.3em 0.5em !important;
+	border: 1px solid #b8b8b8 !important;
+	border-top-color: #999 !important;
+	border-radius: 2px !important;
+	background: #fcfcfa !important;
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.125) !important;
+}
+
+@media only screen and (max-width:641px) { .form-text { width:100% !important;}}

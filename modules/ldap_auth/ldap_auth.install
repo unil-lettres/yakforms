@@ -1,0 +1,54 @@
+<?php
+/**
+ * @file
+ * Installation file for miniOrange LDAP/Active Directory Login.
+ */
+
+
+include 'ldap_auth_feedback.php';
+
+/**
+ * Implements hook_uninstall().
+ */
+ function ldap_auth_uninstall() {
+    variable_del('miniorange_ldap_status');
+    variable_del('miniorange_ldap_customer_admin_email');
+    variable_del('miniorange_ldap_customer_admin_phone');
+    variable_del('miniorange_ldap_customer_api_key');
+    variable_del('miniorange_ldap_status');
+    variable_del('miniorange_ldap_customer_admin_token');
+    variable_del('miniorange_ldap_customer_id');
+    variable_del('miniorange_ldap_enable_ldap');
+    variable_del('miniorange_ldap_enable_auto_reg');
+    variable_del('miniorange_ldap_server');
+    variable_del('miniorange_ldap_server_account_username');
+    variable_del('miniorange_ldap_server_account_password');    
+    variable_del('miniorange_ldap_search_base');
+    variable_del('miniorange_ldap_username_attribute');  
+    variable_del('miniorange_ldap_test_username');
+    variable_del('miniorange_ldap_test_password');
+    variable_del('miniorange_ldap_enable_ntlm');
+    variable_del('miniorange_ldap_config_status');
+    variable_del('miniorange_ldap_enable_logs');
+ }
+
+/**
+ * Implements hook_install().
+ */
+function ldap_auth_install() {
+  user_save(user_load(1), array('data' => array('overlay' => 0)));
+  variable_set('mo_feedback_given', 0);
+}
+
+
+ /**
+ * Implements hook_disable().
+ */
+ function ldap_auth_disable()
+ {
+     if(variable_get('mo_feedback_given',0) == 0){
+		ldap_auth_feedback();
+		variable_set('mo_feedback_given', 1);
+     }
+ }
+?>

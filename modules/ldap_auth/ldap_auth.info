@@ -1,0 +1,13 @@
+name = Active Directory Integration / LDAP Integration - NTLM & Kerberos Login
+description = Login to Drupal site using credentials stored in your LDAP Server. You can also perform login using NTLM or Kerberos authentication using this module. 
+core = 7.x
+files[] = includes/Utilities.php
+files[] = includes/constants.php
+files[] = includes/ldap_auth_support.php
+configure = admin/config/people/ldap_auth
+
+; Information added by Drupal.org packaging script on 2024-01-05
+version = "7.x-1.21"
+core = "7.x"
+project = "ldap_auth"
+datestamp = "1704458064"

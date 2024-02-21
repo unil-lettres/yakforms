@@ -1,6 +1,6 @@
 # Information
 
-Docker configuration for the [Yakforms](https://framagit.org/yakforms/yakforms) project. This is a Drupal 7 / PHP 7.4 app that allows you to create simple forms, collect and analyze responses.
+Docker configuration for the [Yakforms](https://framagit.org/yakforms/yakforms) project. This is a Drupal 7 / PHP 7.4 application that lets you create simple forms, then collect and analyze the responses.
 
 It is not actively maintained anymore, we'll keep the stack frozen until a better solution is found.
 - https://framacolibri.org/t/yakforms-migration-sur-drupal-9/17286
@@ -53,13 +53,13 @@ Use a reverse proxy configuration to map the url to port `8787`.
 When you first access the application, you will be redirected to the installation page.
 
 ## 1. Database configuration
-- Choose PostgreSQL
+- Choose Mysql as the database type
 - Add connection parameters (report values from the .env file, below are the default development values)
   - Database name: yakforms
   - Username: user
   - Password: password
-  - Host: yakforms-postgres
-  - Port: 5432
+  - Host: yakforms-mysql
+  - Port: 3306
 
 ## 2. Then, configure the admin account
 

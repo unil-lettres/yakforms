@@ -19,7 +19,7 @@ services:
       resources:
         limits:
           memory: 500M
-  yakforms-postgres:
+  yakforms-mysql:
     restart: unless-stopped
     deploy:
       mode: global

@@ -1,3 +1,11 @@
+# Ignore configuration files
 .env
+docker-compose.override.yml
+
+# Ignore uploaded files
+files/*
+!files/.keep
+
+# Other
 .idea
 .DS_Store

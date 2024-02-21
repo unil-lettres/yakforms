@@ -30,27 +30,28 @@ services:
     env_file:
       - .env
     depends_on:
-      - yakforms-postgres
+      - yakforms-mysql
     volumes:
       - app-data:/var/www/html
       - ./modules:/var/www/html/sites/all/modules/
       - ./libraries:/var/www/html/sites/all/libraries/
       - ./theme:/var/www/html/profiles/yakforms_profile/themes/yaktheme_ltr/
+      - ./files:/var/www/html/sites/default/files/forms/
     networks:
       - yakforms-net
     container_name: yakforms-app
-  yakforms-postgres:
-    image: postgres:13-alpine
+  yakforms-mysql:
+    image: mariadb:10.6
     env_file:
       - .env
     ports:
-      - "127.0.0.1:5454:5432"
+      - "127.0.0.1:3320:3306"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - mysql-data:/var/lib/mysql
     networks:
       - yakforms-net
-    container_name: yakforms-postgres
+    container_name: yakforms-mysql
 
 volumes:
   app-data:
-  postgres-data:
+  mysql-data:

@@ -53,13 +53,13 @@ Use a reverse proxy configuration to map the url to port `8787`.
 When you first access the application, you will be redirected to the installation page.
 
 ## 1. Database configuration
-- Choose Mysql as the database type
+- Choose PostgreSQL as the database type
 - Add connection parameters (report values from the .env file, below are the default development values)
   - Database name: yakforms
   - Username: user
   - Password: password
-  - Host: yakforms-mysql
-  - Port: 3306
+  - Host: yakforms-postgres
+  - Port: 5432
 
 ## 2. Then, configure the admin account
 

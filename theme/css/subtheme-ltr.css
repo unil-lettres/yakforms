@@ -9,6 +9,16 @@ body {
     .dropdown button:not(.button):focus {
         background: #07BBB2FF;
     }
+
+    .dropdown-menu a[href*="translate"]::before {
+        mask-image: var(--i-keyboard);
+        -webkit-mask-image: var(--i-keyboard);
+    }
+
+    .dropdown-menu a[href*="people"]::before {
+        mask-image: var(--i-edit);
+        -webkit-mask-image: var(--i-edit);
+    }
 }
 
 #main {

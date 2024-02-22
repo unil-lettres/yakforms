@@ -17,6 +17,7 @@ services:
       - ./theme:/var/www/html/profiles/yakforms_profile/themes/yaktheme_ltr:ro
       - ./modules:/var/www/html/sites/all/modules:ro
       - ./libraries:/var/www/html/sites/all/libraries:ro
+      - ./files:/var/www/html/sites/default/files/forms:ro
     ports:
       - "127.0.0.1:8787:80"
     networks:
@@ -30,7 +31,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - yakforms-mysql
+      - yakforms-postgres
     volumes:
       - app-data:/var/www/html
       - ./modules:/var/www/html/sites/all/modules/
@@ -40,18 +41,18 @@ services:
     networks:
       - yakforms-net
     container_name: yakforms-app
-  yakforms-mysql:
-    image: mariadb:10.6
+  yakforms-postgres:
+    image: postgres:16-alpine
     env_file:
       - .env
     ports:
-      - "127.0.0.1:3320:3306"
+      - "127.0.0.1:5454:5432"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - yakforms-net
-    container_name: yakforms-mysql
+    container_name: yakforms-postgres
 
 volumes:
   app-data:
-  mysql-data:
+  postgres-data:

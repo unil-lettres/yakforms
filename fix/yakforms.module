@@ -1,0 +1,1184 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_help().
+ */
+function yakforms_help($path, $arg) {
+    global $base_url;
+    if ($path === 'admin/help#yakforms') {
+        $output = "<h2>" . t('About') . "</h2>";
+        $output .= "<p>". t("Yakforms is a module aimed for building form services online.") . "</p>";
+        $output .= "<p>". t("Its usage is very specific to Yakforms websites, and the module is not usable outside of Yakforms environments : specfific modules are needed, and the overall features of the websites are guided for very special purposes.") . "</p>";
+        $output .= "<p>". t("The following are defined inside the Yakforms module :") . "</p>";
+        $output .= "<ul>";
+        $output .= "<li>" . t("A new node type : « form » or <code>form1</code> (machine-name) nodes are publicly-accessible nodes that any authenticated user can create and configure. A webform is attached to each of node. ") . "</li>";
+        $output .= "<li>" . t("Blocks and menu links for user navigation.") . "</li>";
+        $output .= "<li>" . t("Default pages.") . "</li>";
+        $output .= "<li>" . t("Cron tasks for limited-lifetime nodes : to avoid piling up useless data forever, forms expire after a few months by default. (This feature can be deactivated by the admin if necessary)..") . "</li>";
+        $output .= "<li>" . t(
+                "A central administration menu to manage most of the website's parameter : <a href='@link'>Administration page.</a>",
+                ['@link' => $base_url . "/admin/config/system/yakforms"]
+            )
+            . "</li>";
+        $output .= "</ul>";
+        return $output;
+    }
+}
+
+/**
+ * Implements hook_menu.
+ * Declares an administration menu, accessible only to admin.
+ *
+ * @return void
+ */
+function yakforms_menu() {
+    $items = array();
+    $items['admin/config/system/yakforms'] = array(
+        'title' => "Configure Yakforms",
+        'description' => 'Configuration for Yakforms module',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('yakforms_config_form'),
+        'access arguments' => array('access administration pages'),
+        'type' => MENU_CALLBACK,
+        'file' => 'includes/yakforms.admin.inc',
+    );
+    $items['admin/yakforms/dashboard'] = array(
+        'title' => "Overview",
+        'description' => "General dashboard containing statistics about your website.",
+        'page callback' => 'get_dashboard_content',
+        'access arguments' => array('access administration pages'),
+        'type' => MENU_NORMAL_ITEM,
+        'weight' => -60,
+        'file' => 'includes/yakforms.admin.inc',
+    );
+    $items['expiration'] = array(
+        'title' => "Expiration",
+        'description' => "Instructions page for expired forms.",
+        'page callback' => 'get_expiration_content',
+        'type' => MENU_NORMAL_ITEM,
+        'access arguments' => array('access content'),
+        'file' => 'includes/yakforms.pages.inc',
+    );
+    $items['node/%/share'] = array(
+        'title' => "Share",
+        'description' => "Instructions to share the form.",
+        'page callback' => 'get_share_content',
+        // Render as tab.
+        'type' => MENU_LOCAL_TASK,
+        'access callback' => 'user_is_logged_in',
+        'file' => 'includes/yakforms.pages.inc',
+        'weight' => 1000,
+    );
+    return $items;
+}
+
+/**
+ * Implements hook_menu_alter.
+ *
+ * @param $items
+ *   : menu items
+ *
+ * @return void
+ */
+function yakforms_menu_alter(&$items) {
+    $items['node/add/form1']['access arguments'][] = $items['node/add/form1']['access callback'];
+    $items['node/add/form1']['access callback'] = '_yakforms_check_users_forms';
+}
+
+/**
+ * Implements hook_block_info : defines Yakforms-specific blocks.
+ *
+ * @return void
+ */
+function yakforms_block_info() {
+    // Block : contact form link at the bottom of the form.
+    $blocks['yakforms_contact_form_block'] = array(
+        'info' => t("Contact form link"),
+        'cache' => DRUPAL_CACHE_PER_PAGE,
+        'status' => TRUE,
+        'region' => 'content',
+        'weight' => 10,
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*",
+    );
+    // Block : alert block about passwords.
+    $blocks['yakforms_no_password'] = array(
+        'info' => t("Password alert"),
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'content',
+        'weight' => 20,
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*",
+    );
+    // Block : General header with Yakforms title.
+    $blocks['yakforms_header'] = array(
+        'info' => t("General header"),
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'highlighted',
+        'weight' => 10,
+    );
+    // Block : header with links for a logged-in user.
+    $blocks['yakforms_user_header'] = array(
+        'info' => t("User links"),
+        'cache' => DRUPAL_CACHE_PER_USER,
+        'status' => TRUE,
+        'region' => 'highlighted',
+        'weight' => 20,
+        'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+        'pages' => "node/add\nnode/add/*",
+    );
+    // Block : header with links for an anonymous user.
+    $blocks['yakforms_anonymous_header'] = array(
+        'info' => t("Anonymous user links"),
+        'cache' => DRUPAL_CACHE_PER_ROLE,
+        'status' => TRUE,
+        'region' => 'highlighted',
+        'weight' => 30,
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "<front>\nfonctionnalites\nuser\nuser/*\ndocs/*",
+    );
+    // Block : warning for a user when creating a form.
+    $blocks['yakforms_create_form'] = array(
+        'info' => t("New form warning"),
+        'title' => "Nouveau formulaire",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'highlighted',
+        'weight' => 40,
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/add/form1",
+    );
+    // Block : account information page.
+    $blocks['yakforms_my_account'] = array(
+        'info' => t("My Yakforms account"),
+        'title' => "Mon compte",
+        'cache' => DRUPAL_CACHE_PER_USER,
+        'status' => TRUE,
+        'region' => 'content',
+        'weight' => 0,
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "user/\nuser/*",
+    );
+    $blocks['help_confirmation_email'] = array(
+        'info' => t("Help : confirmation email"),
+        'title' => "Email de confirmation",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'sidebar_first',
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*/webform/confirmation-settings",
+    );
+    $blocks['help_emails'] = array(
+        'info' => t("Help : email interaction"),
+        'title' => "Emails",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'sidebar_first',
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*/webform/emails",
+    );
+    $blocks['help_validation'] = array(
+        'info' => t("Help : validation conditions"),
+        'title' => "Conditions de validation",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'sidebar_first',
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*/webform/validation",
+    );
+    $blocks['help_settings'] = array(
+        'info' => t("Help : configure form"),
+        'title' => "Paramètres du formulaire",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'sidebar_first',
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*/webform/configure",
+    );
+    $blocks['help_conditionnals'] = array(
+        'info' => t("Help : conditionnal fields"),
+        'title' => "Champs conditionnels",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'sidebar_first',
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*/webform/conditionals",
+    );
+    $blocks['help_form1_creation'] = array(
+        'info' => t("Help : new form"),
+        'title' => "Nouveau formulaire",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'sidebar_first',
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/add/form1\nnode/*/edit",
+    );
+    $blocks['help_generic'] = array(
+        'info' => t("Help : global"),
+        'title' => "Aide",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'sidebar_first',
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*/view",
+    );
+    $blocks['help_form1_webform'] = array(
+        'info' => t("Help : new form creation - webform"),
+        'title' => "Configuration du formulaire",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'sidebar_first',
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*/webform\nnode/*/webform/form-builder",
+    );
+    $blocks['help_form1_webform_components'] = array(
+        'info' => t("Help : add form components"),
+        'title' => "Ajouter des composants de formulaire",
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'sidebar_first',
+        'visibility' => BLOCK_VISIBILITY_LISTED,
+        'pages' => "node/*/webform/components/new/*\nnode/*/webform/components/*\nnode/*/webform/components",
+    );
+    $blocks['yakforms_footer'] = array(
+        'info' => t('Footer'),
+        'title' => t("Powered by Yakforms"),
+        'cache' => DRUPAL_CACHE_GLOBAL,
+        'status' => TRUE,
+        'region' => 'footer',
+    );
+    return $blocks;
+}
+
+/**
+ * Implements hook_node_presave.
+ *
+ * On node modification, if the form was about to expire and the date was pushed
+ * back by the user, take the node out of the yakforms_expired table.
+ */
+function yakforms_node_presave($node){
+    module_load_include('inc', 'yakforms', 'includes/yakforms.util');
+    if ($node->type != 'form1' || !_form_is_almost_expired($node)) {
+        return;
+    }
+    watchdog(
+        'yakforms',
+        'The form !nid was about to expire, but the form was modified. Deleting this form from yakforms_expired.',
+        array(
+            '!nid' => $node->nid,
+        ),
+        WATCHDOG_NOTICE
+    );
+
+    try{
+        db_delete('yakforms_expired')
+            ->condition('nid', $node->nid)
+            ->execute();
+    } catch (PDOException $e) {
+        watchdog(
+            'yakforms',
+            'Error taking the node !nid out of yakforms_expired in yakforms_node_presave : %error',
+            array(
+                '%error' => $e,
+                '!nid' => $node->nid
+            ),
+            WATCHDOG_ERROR);
+    }
+}
+
+/**
+ * Implements hook_block_view.
+ * Defines content for Yakforms-specific blocks.
+ *
+ * @param string $delta
+ *   : the block identifier.
+ *
+ * @return void
+ */
+function yakforms_block_view($delta) {
+    module_load_include('inc', 'yakforms', 'includes/yakforms.block');
+    global $user;
+    global $base_url;
+    $block = array();
+    // Get the current nid to generate content from there.
+    $current_url = $_GET['q'];
+    $matches = array();
+    preg_match("/node\/([0-9]+)/", $current_url, $matches);
+    if (isset($matches[1])) {
+        $nid = $matches[1] ? $matches[1] : NULL;
+    }
+    else {
+        $nid = NULL;
+    }
+    // Generate content by block ID.
+    switch ($delta) {
+        case 'yakforms_contact_form_block':
+            $block['content'] = array();
+            // Only display this block on form1-type nodes.
+            if (!isset($nid) || !node_is_form1($nid)) {
+                return;
+            }
+            // don't show this block on edit pages of form1 nodes.
+            if (strpos($current_url, 'edit')) {
+                return;
+            }
+            $block['content'] = array();
+            $block['content']['#markup'] = "";
+            $block['content']['#markup'] .= get_contact_form_content($nid);
+            break;
+
+        case 'yakforms_no_password':
+            // Only display this block on form1-type nodes.
+            if (!isset($nid) || !node_is_form1($nid)) {
+                return;
+            }
+            // don't show this block on edit pages of form1 nodes.
+            if (strpos($current_url, '/edit')) {
+                return;
+            }
+            $block['content'] = array(
+                '#markup' => "<i>" . t("Do not communicate any password through Yakforms.") . "</i>",
+            );
+            break;
+
+        case 'yakforms_header':
+            $block['content']['#markup'] = "<header ><a href='{$base_url}'><h1 class='big-title'>" . variable_get('yakforms_general_header_html') . '</h1></a></header>';
+            $block['content']['#markup'] .= '<p class="lead">' . variable_get('site_slogan') . '</p>';
+            break;
+
+        case 'yakforms_anonymous_header':
+            // Only display to anonymous users.
+            if (user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = '<div class="user-block-connect">';
+            $block['content']['#markup'] .= "<a href='{$base_url}/user/register' class='btn btn-success btn-sm' role='button'>" . t("Register") . "</a>";
+            $block['content']['#markup'] .= '&nbsp;&nbsp;&nbsp;&nbsp;';
+            $block['content']['#markup'] .= "<a href='{$base_url}/user' class='btn btn-primary btn-sm' role='button'>" . t("Log in") . "</a><br/><br/>";
+            $block['content']['#markup'] .= '<div>';
+            $block['content']['#markup'] .= "<a href='{$base_url}/fonctionnalites' class='btn btn-default btn-sm' role='button'>" . t("Features") . "</a>";
+            $block['content']['#markup'] .= ' </div> </div>';
+            $block['content']['#markup'] .= '</div class="user-block-connect">';
+            break;
+
+        case 'yakforms_user_header':
+            // Only display to logged-in users.
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = '<div class="user-block-connect">';
+            // Button for account settings.
+            $block['content']['#markup'] .= "<a role='button' class='btn btn-link btn-sm' href='{$base_url}/user/{$user->uid}'>Mon compte (" . $user->name . ')</a>';
+            $block['content']['#markup'] .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+            // Logout button.
+            $block['content']['#markup'] .= "<a role='button' class='btn btn-danger btn-sm' href='{$base_url}/user/logout'>" . t('Log out') . '</a>';
+            $block['content']['#markup'] .= "<br /><br />";
+            $block['content']['#markup'] .= "<a href='{$base_url}/fonctionnalites' class='btn btn-default btn-sm' role='button'>" . t("Features") . '</a>';
+            $block['content']['#markup'] .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+            $block['content']['#markup'] .= "<a href='{$base_url}/node/add/form1' class='btn btn-primary btn-sm' role='button'>" . t("Create a new form") . '</a>';
+            $block['content']['#markup'] .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+            $block['content']['#markup'] .= "<a href='{$base_url}/templates' class='btn btn-primary btn-sm' role='button'>" . t('Create a form from a template') . '</a>';
+            $block['content']['#markup'] .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+            $block['content']['#markup'] .= "<a role='button' class='btn btn-primary btn-sm' href='{$base_url}/user/{$user->uid}/forms'>" . t('My forms') . '</a>';
+            $block['content']['#markup'] .= "<br/>";
+            $block['content']['#markup'] .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+
+            $admin = user_role_load_by_name('administrator');
+            $admin_id = $admin ? $admin->rid : null;
+            $translator = user_role_load_by_name('traducteur');
+            $translator_id = $translator ? $translator->rid : null;
+
+            if ($admin_id && user_has_role($admin_id, $user)) {
+                $block['content']['#markup'] .= "<a href='{$base_url}/admin/people' class='btn btn-primary btn-sm' role='button'>Gestion des utilisateurs</a>";
+                $block['content']['#markup'] .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+            }
+
+            if ($translator_id && user_has_role($translator_id, $user)) {
+                $block['content']['#markup'] .= "<a href='{$base_url}/admin/config/regional/translate/translate' class='btn btn-primary btn-sm' role='button'>Traductions</a>";
+                $block['content']['#markup'] .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+            }
+
+            $block['content']['#markup'] .= '</div class="user-block-connect">';
+            break;
+
+        case 'yakforms_my_account':
+            // don't show this block on the "edit" page.
+            if (strpos($current_url, 'edit')) {
+                return;
+            }
+            $block['content']['#markup'] = '<p>' . t('Welcome to your Yakforms account !') . '</p>';
+            $block['content']['#markup'] .= '<p>' . t('You can :') . '</p>';
+            $block['content']['#markup'] .= '<ul>';
+            $block['content']['#markup'] .= '<li>' . t('edit your personal information ("Edit" tab above) ;') . '</li>';
+            $block['content']['#markup'] .= '<li>' . t('access your forms ("My forms" button above) ;') . '</li>';
+            $block['content']['#markup'] .= "<li> <a href='{$base_url}/node/add/form1'>" . t('create a new form') . '</a></li>';
+            $block['content']['#markup'] .= '<li> <a href="' . variable_get('site_contact_url') . '">' . t('contact us') . '</a></li>';
+            $block['content']['#markup'] .= '</ul>';
+            break;
+
+        case 'yakforms_create_form':
+            $block['content']['#markup'] = "<p>";
+            $block['content']['#markup'] .= t("You are about to create a new form.") . "<br />";
+            $block['content']['#markup'] .= t("Start by filling the fields below, then click « Submit »") . "<br />";
+            $block['content']['#markup'] .= "<b>" . t("NB : the form's title will affect its URL. Choose it wisely and watch out : changing it will change the form's URL !") . "</b>";
+            $block['content']['#markup'] .= "</p>";
+            break;
+
+        case 'help_confirmation_email':
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = t("Here, you can specify how long you want the confirmation email to be valid (if you are using this option), and if you want the user's submission to be eventually destroyed.");
+            $block['content']['#markup'] .= "<br><br>";
+            $block['content']['#markup'] .= t("(NB : if you are looking for the configuration parameters, you'll find them in the « Emails » tab !)");
+            break;
+
+        case 'help_emails':
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = t("This feature allows you to send an email to a specified address.
+        For example you can send an email to the form's author at each new submission.
+        This email can optionally contain the values submitted by the user.") . "<br>";
+            $block['content']['#markup'] .= t("But the real interest of this module is to set up a confirmation process by email.") . "<br>";
+            $block['content']['#markup'] .= t("If a user submits a form, they will receive an email with a confirmation link. Their submission won't be appear in the results until they have clicked on this link.
+        This can be very useful if you want to make sure all submitted emails are valid.") . "<br>";
+            $block['content']['#markup'] .= "<strong>" . t("Watch out : to use the confirmation process, your form must have an « email » component.") . "</strong>";
+            $block['content']['#markup'] .= t(" (well yeah, how can you possibly send an email if you don't have an address ? :P )");
+            break;
+
+        case 'help_validation':
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = t("(for advanced users)") . "<br>";
+            $block['content']['#markup'] .= t("Here, you can define conditions to validate a user's submission.
+      If these conditions are not fulfilled, the submission won't be saved, and the user will be asked to modify their submission.") . "<br>";
+            $block['content']['#markup'] .= "<strong>" . t("Use cases :") . "</strong>";
+            $block['content']['#markup'] .= "<ul>";
+            $block['content']['#markup'] .= "<li>" . t("You want to set the maximum number of characters in a text area to 200.") . "</li>";
+            $block['content']['#markup'] .= "<li>" . t("You want to forbid the use of some words in a text area") . "</li>";
+            $block['content']['#markup'] .= "<li>" . t("You want to make sure a 'size at age 5' field is inferior to a 'size at age 20' field.") . "</li>";
+            $block['content']['#markup'] .= "<li>" . t("You want to make sure that 'Awesome project name' begins with 'Frama-'") . "</li>";
+            $block['content']['#markup'] .= "<li>" . t("etc") . "</li>";
+            break;
+
+        case 'help_settings':
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = t("Getting real, isn't it ? :)") . "<br>";
+            $block['content']['#markup'] .= t("Here are the advanded parameters for your form.") . "<br>";
+            $block['content']['#markup'] .= t("The good part : The default configuration is enough for 90% of cases.") . "<br>";
+            $block['content']['#markup'] .= t("The less good part : if you mess around and end up breaking your form, don't come whining ! (Don't worry, you'll 'only' have broken your own form, the worst that can happen is having to start over a new one :)") . "<br>";
+            break;
+
+        case 'help_conditionnals':
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = t("Conditonal fields allow you to take actions depending on the user's values. ");
+            $block['content']['#markup'] .= t("Examples :") . "<br>";
+            $block['content']['#markup'] .= "<strong>" . t("Show and hide fields :") . "</strong>" . "<br>";
+            $block['content']['#markup'] .= t("IF the user selected « other » for « Structure type » ");
+            $block['content']['#markup'] .= t("THEN  show the text area « Other structure types » ") . "<br>";
+            $block['content']['#markup'] .= t("IF the user checked the option « I don't like soup » ");
+            $block['content']['#markup'] .= t("THEN hide the question « What's your favorite soup ? ».") . "<br>";
+            $block['content']['#markup'] .= "<strong>" . t("Force a value :") . "</strong>" . "<br>";
+            $block['content']['#markup'] .= t("IF the user checked the option « I got 3 presents or more for Christmas » ");
+            $block['content']['#markup'] .= t("THEN automatically check the option « Yes » for the question « Am I lucky ? » ") . "<br>";
+            $block['content']['#markup'] .= "<strong>" . t("Make a field mandatory : ") . "</strong>" . "<br>";
+            $block['content']['#markup'] .= t("IF the user checked the option « I went to space » ");
+            $block['content']['#markup'] .= t("THEN make the field « Which planet ? » mandatory. ") . "<br>";
+            $block['content']['#markup'] .= "<a href='{$base_url}/conditional-fields/'>" . t("More information") . "</a>";
+            break;
+
+        case 'help_form1_creation':
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = t("Fill the general information describing your form, then click « Submit » to proceed to add form fields.") . "<br><br>";
+            $block['content']['#markup'] .= t("Once this is done, click on the « Webform » tab <strong>which will only appear once the description is saved !</strong>");
+            break;
+
+        case 'help_generic':
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = t("Cliquez sur l'onglet « Formulaire » pour poursuivre la création de formulaire...");
+            break;
+
+        case 'help_form1_webform':
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = t("Here we go !") . "<br/>";
+            $block['content']['#markup'] .= t("Choose your form's components.") . "<br/>";
+            $block['content']['#markup'] .= t("You can drag and drop the components on the right into the preview zone to build the form you want.") . "<br/>";
+            $block['content']['#markup'] .= t("You can also set advanced parameters for your form by clicking on « Emails », « Conditional fields », etc .") . "</p>";
+            $block['content']['#markup'] .= "<p>" . t("Watch out : it is not recommanded to modify your form once you received at least one submission You might loose your data.") . "</p>";
+            $block['content']['#markup'] .= "<p>" . t("You must insert at least ONE form field before clicking « Submit ». If your form remains empty, it will be considered as a potential spam, and you might loose your work.") . "</p>";
+            break;
+
+        case 'help_form1_webform_components':
+            if (!user_is_logged_in()) {
+                return;
+            }
+            $block['content']['#markup'] = t("Here you can define the same components as with the graphic menu, but in a more... « manual » way. ") . "<br>";
+            $block['content']['#markup'] .= t("This might work better on mobile.");
+            break;
+
+        case 'yakforms_footer':
+            $block['content']['#markup'] = "<u><a href='https://yakforms.org'>Yakforms</a></u>" . t(" is an online, free, add-less and privacy-friendly service to create forms (polls, surveys, quiz, etc.) ") . "<br>";
+            $block['content']['#markup'] .= t("Yakforms is powered by") . " <u><a href='https://www.drupal.org/'>Drupal 7</a></u>.";
+            break;
+    }
+    return $block;
+}
+
+/**
+ *
+ */
+function yakforms_preprocess_page(&$vars, $hook) {
+    $meta_element = array(
+        // The #tag is the html tag -.
+        '#tag' => 'meta',
+        // Set up an array of attributes inside the tag.
+        '#attributes' => array(
+            'name' => 'viewport',
+            'content' => 'width=device-width, initial-scale=1.0',
+        ),
+    );
+    drupal_add_html_head($meta_element, 'meta-responsive');
+
+    if(current_path() == "node/add/form1"){
+        drupal_add_js(drupal_get_path('theme', 'yaktheme').'/js/expiration_date.js');
+    }
+}
+
+/**
+ * Implements hook_webform_submission_load :
+ * anonymizes the webform submissions for the author to see.
+ */
+function yakforms_webform_submission_load(&$submissions) {
+    global $user;
+    $submission = current($submissions);
+
+    if (in_array('administrator', $user->roles)) {
+        // Do we need to anonymze ?
+    }
+    else {
+        foreach ($submissions as $sid => $submission) {
+            // If called for, anonymize uid and ip of submission before display.
+            $submission->uid = 0;
+            $submission->name = 'Anonymous';
+            $submission->remote_addr = '0.0.0.0';
+        }
+    }
+}
+
+/**
+ * Implemements hook_views_access_callbacks :
+ * Add specific views access if the visitor is the author of the node.
+ */
+function yakforms_views_access_callbacks() {
+    return array(
+        '_yakforms_user_has_access' => t('Current user is author of the node'),
+    );
+}
+
+/**
+ * Callback for yakforms_views_access_callbacks : returns true
+ * if the current user is the author of the node.
+ *
+ * @param [type] $account
+ *
+ * @return void
+ */
+function _yakforms_user_has_access($account = NULL) {
+    global $user;
+    $node = node_load(arg(1));
+    if ((isset($node->uid, $GLOBALS['user']->uid) && $GLOBALS['user']->uid == $node->uid && $GLOBALS['user']->uid > 0) || (user_has_role(3))) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+/**
+ * Implements hook_webform_submission_action.
+ *
+ * Adds a "Back to results" action at the top of the page when viewing a single
+ * submission.
+ */
+function yakforms_webform_submission_actions($node, $submission) {
+    global $base_url;
+    if (webform_results_access($node)) {
+        $actions['back-to-results-action'] = array(
+            'title' => t('Back to results'),
+            'href' => "{$base_url}/node/{$node->nid}/webform-results/table",
+            'query' => '',
+        );
+    }
+
+    return $actions;
+}
+
+/**
+ * Implements hook_mail_alter.
+ *
+ * Alters the headers for direct contact emails.
+ */
+function yakforms_mail_alter(&$message) {
+    global $base_url;
+    $base_domain = trim($base_url, 'https://');
+    $base_email = variable_get('site_mail', "no-reply@{$base_domain}.org");
+    // Forge corrected From email.
+    $substitution_from_email = '"';
+    $substitution_from_email .= t("@from via @base_domain", array(
+        '@from' => $message['from'],
+        '@base_domain' => $base_domain,
+    ));
+    $substitution_from_email .= '" <' . $base_email . '>';
+    switch($message['id']){
+        case 'contact_user_mail':
+            $message['headers']['Reply-To'] = $message['from'];
+            $message['headers']['From'] = $substitution_from_email;
+            $message['from'] = $substitution_from_email;
+            break;
+    }
+}
+
+/**
+ * Implements of hook_mail() :
+ * Sends yakforms-specific mails.
+ */
+function yakforms_mail($key, &$message, $params) {
+    switch ($key) {
+        case 'expired_webform':
+            if (isset($params['subject'])) {
+                $message['subject'] = $params['subject'];
+            }
+            if (isset($params['body'])) {
+                $message['body'][] = $params['body'];
+            }
+            if (isset($params['headers']) && is_array($params['headers'])) {
+                $message['headers'] += $params['headers'];
+            }
+            break;
+    }
+}
+
+/**
+ * Implements hook_cron :
+ * Checks for webforms about to expire (following intervals defined in variables) and send an email
+ * to its owner. Deletes expired forms after a period of inactivity.
+ */
+function yakforms_cron() {
+    module_load_include('inc', 'yakforms', 'includes/yakforms.expiration');
+    global $user;
+    /**
+     * Parameter for adjusting cron frequency.
+     */
+    // The last time the cron task was run.
+    $yakforms_cron_last = variable_get('yakforms_cron_last');
+    $cron_limit = new DateTime();
+    $cron_limit->setTimestamp($yakforms_cron_last);
+    $cron_limit->modify('+' . variable_get('yakforms_cron_frequency'));
+    $now = new DateTime();
+
+    // If the cron was executed less than 24h ago, do nothing.
+    if ($now < $cron_limit) {
+        return;
+    }
+    // else, proceed to cron.
+    watchdog('yakforms', "Cron task launched.");
+    variable_set('yakforms_cron_last', $now->getTimestamp());
+
+    /**
+     * Handle expired nodes
+     */
+    // Look in node table for nodes about to expire, and notify the users.
+    make_forms_expire();
+    // Delete expired nodes after a period of inactivity.
+    delete_expired_nodes();
+}
+
+
+/**
+ * Implements hook_node_delete.
+ */
+function yakforms_node_delete($node) {
+    // If the node being deleted is a page, then delete its aliases too.
+    if ($node->type == 'page') {
+        db_delete('url_alias')
+            ->condition('source', 'node/' . $node->nid)
+            ->execute();
+    }
+}
+
+/**
+ * Implements hook_clone_node_alter.
+ *
+ * Modifies the expiration date of cloned nodes in order to push it back later
+ * (as it is previously set to the original node's expiration date).
+ * @param $node
+ *   Reference to the fully loaded node object being saved (the clone) that
+ *   can be altered as needed.
+ * @param array $context
+ *   An array of context describing the clone operation. The keys are:
+ *   - 'method' : Can be either 'prepopulate' or 'save-edit'.
+ *   - 'original_node' : The original fully loaded node object being cloned.
+ *
+ */
+function yakforms_clone_node_alter(&$node, $context) {
+    $date_obj = new DateTime($node->field_form1_expiration['und'][0]['value']);
+    $default_expiration = variable_get('yakforms_expiration_period_default_value', 26);
+    // Get the DateTime object for x weeks from now.
+    $date_obj->modify("+{$default_expiration} weeks");
+    // Update the node's expiration date value.
+    $node->field_form1_expiration['und'][0]['value'] = $date_obj->format('Y-m-d 00:00:00');
+}
+
+/**
+ * Implements hook_form
+ *
+ * Return default form for custom content type creation by the user.
+ *
+ * @param $node
+ * @param $form_state
+ * @return array the form object
+ */
+function yakforms_form($node, $form_state) {
+    return node_content_form($node, $form_state);
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Disable wysiwyg on markup widget and add protection before leaving.
+ */
+function yakforms_form_alter(&$form, &$form_state, $context) {
+    if(!isset($form['#id'])){
+        return;
+    }
+    module_load_include('inc', 'yakforms', 'includes/yakforms.util');
+
+    $form_id['edit-markup-value']['#wysiwyg'] = FALSE;
+    $form_id['edit-markup-value']['und'][0]['#wysiwyg'] = FALSE;
+    $form_id['markup']['#wysiwyg'] = FALSE;
+    $form_id['markup']['und'][0]['#wysiwyg'] = FALSE;
+    $form_id['form-builder-element-markup']['#type'] = 'text_format';
+
+    // Add submit callback before a node gets deleted.
+    if($form['#id'] == 'node-delete-confirm'){
+        // Adding export of forms submissions BEFORE the node-deleting callback.
+        $node_delete_submit_index = array_search('node_delete_confirm_submit', $form['#submit']);
+        if ($node_delete_submit_index !== FALSE) {
+            array_splice($form['#submit'], $node_delete_submit_index, 0, 'yakforms_export_before_delete_submit');
+        }
+    }
+
+    // Add submit callback to save all user's form before the user gets deleted.
+    if($form['#id'] == 'user-cancel-confirm-form'){
+        // Append reminder of the user's forms as HTML
+        $html_form_list = t("<br><p>This user is the author of : </p>");
+        $html_form_list .= _get_html_form_list(_get_user_forms($form['uid']['#value']));
+        $form["user_forms"] = array(
+            '#title' => "User forms",
+            '#type' => 'markup',
+            '#markup' => $html_form_list
+        );
+
+        // Add callback BEFORE the user-deleting callback.
+        $user_delete_submit_index = array_search(' user_cancel_confirm_form_submit', $form['#submit']);
+        array_splice($form['#submit'], $user_delete_submit_index, 0, 'yakforms_export_users_content_before_delete_submit');
+    }
+
+    if ($form['#id'] == 'form-builder-webform-save-form'|| $form['#id'] == 'form1-node-form') {
+        if(_form_has_submissions($form['#node']) > 0){
+            drupal_add_js(drupal_get_path('module', 'yakforms').'/includes/js/form_has_submissions.js');
+        }
+    }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Adds messages to user forms.
+ */
+function yakforms_form_webform_client_form_alter (&$form, &$form_state, $form_id) {
+    if($form['#node']->type != 'form1') {
+        return;
+    }
+    $node = $form['#node'];
+    $messages = _get_client_messages($node);
+    foreach ($messages as $message) {
+        drupal_set_message(
+            token_replace($message['message'],
+                array('node' => $node)),
+            $message['level'],
+            FALSE
+        );
+    }
+    // Deactivate form submit if the maximum number of submission is reached.
+    $max_submissions = _get_form_submission_limit($node);
+    if (_form_has_submissions($node) >= $max_submissions
+        && $max_submissions > 0) {
+        drupal_set_message(
+            "The maximum number of submissions for this form has been reached.",
+            'warning',
+            FALSE,
+        );
+        $form['actions']['submit']['#attributes']['disabled'] = 'disabled';
+        $form['actions']['next']['#attributes']['disabled'] = 'disabled';
+    }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Adds a custom validation function to the "advanced parameter" menu for a
+ * client form.
+ */
+function yakforms_form_webform_configure_form_alter(&$form, &$form_state, $form_id) {
+    $form['#validate'][] = 'yakforms_form_webform_configure_form_validate';
+}
+
+/**
+ * Implements hook_form_validate().
+ */
+function yakforms_form_webform_configure_form_validate($form, &$form_state) {
+    // No constraint for admin users.
+    if (user_access('administer nodes')) {
+        return;
+    }
+    $form_values = $form_state['values'];
+    $site_limit = variable_get('yakforms_submissions_per_form_limit', 0);
+    // Make sure the submission limit is not higher than than the site-wide limit.
+    if ($site_limit != 0 && $form_values['total_submit_limit'] > $site_limit) {
+        form_set_error(
+            '[submission][total_submit_limit]',
+            t(
+                "The submission limit can't be higher than what the site's maximum (!limit).",
+                ['!limit' => $site_limit]
+            )
+        );
+    }
+}
+
+/**
+ * Form submit callback for node/%/delete.
+ *
+ * Calls export of form submissions as csv files.
+ *
+ * @param Array $form
+ * @param Array $form_state
+ * @return void
+ */
+function yakforms_export_before_delete_submit(&$form, &$form_state){
+    module_load_include('inc', 'yakforms', 'includes/yakforms.expiration');
+    $form_to_delete_nid = $form['nid']['#value'];
+    yakforms_export_node_submissions($form_to_delete_nid);
+}
+
+/**
+ * Form submit callback for users/%/cancel.
+ *
+ * Calls export of all of the user's form submissions as csv files.
+ *
+ * @param Array $form
+ * @param Array $form_state
+ * @return void
+ */
+function yakforms_export_users_content_before_delete_submit(&$form, &$form_state){
+    module_load_include('inc', 'yakforms', 'includes/yakforms.expiration');
+    $uid = $form['uid']['#value'];
+    // Get the user's forms
+    try{
+        $user_forms = db_select('node', 'n')
+            ->fields('n', array('nid'))
+            ->condition('uid', $uid)
+            ->execute()
+            ->fetchAll();
+    }
+    catch(Exception $e){
+        watchdog('yakforms', "Unable to export forms for user %id : Error in yakforms_export_users_content_before_delete_submit. %error",
+            array('%id' => $uid, '%error' => $e),
+            WATCHDOG_ERROR
+        );
+    }
+    foreach($user_forms as $form){
+        yakforms_export_node_submissions($form->nid);
+    }
+}
+/**
+ * Implements hook_node_info.
+ *
+ * Declare custom content types
+ */
+function yakforms_node_info() {
+    return array(
+        'form1' => array(
+            'name' => t('Formulaire'),
+            'base' => 'yakforms', // prefix where Drupal is going to try and find hooks.
+            'description' => t("You are about to create a new form. Start by filling the fields below, then click « Submit ». NB : the form's title will affect its URL. Choose it wisely and watch out : changing it will change the form's URL !"),
+            'title_label' => 'Titre',
+            'locked' => FALSE,
+        ),
+    );
+}
+
+/**
+ * Implements hook_node_type_insert.
+ *
+ * Defines the fields for the node content type
+ *
+ * @param stdClass $content_type
+ * @return void
+ */
+function yakforms_node_type_insert($content_type) {
+    if($content_type->type == 'form1'){
+        module_load_include('inc', 'yakforms', 'includes/yakforms.node');
+        // Get array of fields to add to our content type ...
+        $fields = yakforms_custom_field_bases();
+        // ... and create them.
+        foreach ($fields as $field) {
+            try {
+                field_create_field($field);
+            }
+            catch(DatabaseSchemaObjectExistsException $e){
+                watchdog('yakforms',
+                    "The following error was raised and ignored creating the content type : !e",
+                    array('!e' => $e),
+                    WATCHDOG_WARNING);
+            }
+        }
+
+        /**
+         * Get all the instances of our fields, that is, which bundle they should be
+         * linked to.
+         **/
+        $instances = yakforms_custom_field_instances();
+
+        foreach($instances as $instance){
+            try{
+                field_create_instance($instance);
+            }
+            catch(FieldException $e){
+                watchdog('yakforms',
+                    "The following error was raised and ignollred creating the field instances : !e",
+                    array('!e' => $e),
+                    WATCHDOG_WARNING);
+            }
+        }
+    }
+    // Attach webform to each node
+    variable_set('webform_node_form1', 1);
+    // Disable comments
+    variable_set('comment_form1', 1);
+    // Disable display of author's information
+    variable_set('node_submitted_form1', 0);
+    // Set Pathauto alias format
+    variable_set('pathauto_node_form1_pattern', '[node:title]-[node:created:raw]');
+
+    // Assign permssions to roles
+    $authenticated_permissions = array(
+        'create form1 content',
+        'edit own form1 content',
+        'delete own form1 content'
+    );
+    $admin_permissions = array(
+        'edit any form1 content',
+        'delete own form1 content',
+        'delete any form1 content',
+    );
+
+    user_role_grant_permissions(
+        user_role_load_by_name('authenticated user')->rid,
+        $authenticated_permissions
+    );
+    user_role_grant_permissions(
+        user_role_load_by_name('administrator')->rid,
+        $admin_permissions
+    );
+}
+
+/**
+ * Implements hook_token_info.
+ *
+ * @return void
+ */
+function yakforms_token_info (){
+    $info = array();
+    $info['types'] = array(
+        'yakforms-limitations' => array(
+            'name' => t('Limitations'),
+            'description' => t('Limitations for this instance.')
+        ),
+        'yakforms-form' => array(
+            'name' => t('Form'),
+            'description' => t('Tokens regarding the current form'),
+            'needs-data' => array('node')
+        ),
+        'yakforms-user' => array(
+            'name' => t('Yakforms - user'),
+            'description' => t('Tokens regarding the current Yakforms user'),
+            'needs-data' => array('user')
+        )
+    );
+    $info['tokens'] = array(
+        'yakforms-limitations' => array(
+            // [yakforms-limitations:forms-per-user]
+            'forms-per-user' => array(
+                'name' => t('Forms per user'),
+                'description' => t('Maximum number of forms per user allowed on this instance.')
+            ),
+            'submissions-per-form' => array(
+                'name' => t('Submissions per form'),
+                'description' => t('Maximum number of submissions per form allowed on this instance.')
+            ),
+            'form-lifetime' => array(
+                'name' => t('Maximum form lifetime'),
+                'description' => t('Maximum lifetime for a form on this instance.')
+            )
+        ),
+        'yakforms-form' => array(
+            //[yakforms-form:clone-url]
+            'clone-url' => array(
+                'name' => t('Clone URL'),
+                'description' => t('URL to clone this form')
+            ),
+            'expiration-date' => array(
+                'name' => t('Expiration date'),
+                'description' => t("The forms's expiration date")
+            ),
+            'submissions' => array(
+                'name' => t('Number of submissions'),
+                'description' => t("Number of submissions for this form")
+            ),
+            'deletion-date' => array(
+                'name' => t('Deletion date'),
+                'description' => t("The forms's date of deletion")
+            ),
+            'submission-limit' => array(
+                'name' => t("Submission limit"),
+                'description' => t('Maximum number of submissions for this form')
+            )
+        ),
+        'yakforms-user' => array(
+            'my-forms' => array(
+                'name' => t('My forms menu'),
+                'description' => t("Link to the user's forms")
+            )
+        )
+    );
+    return $info;
+}
+
+/**
+ * Implements hook_tokens
+ *
+ * @return void
+ */
+function yakforms_tokens(String $type, array $tokens, array $data = array(), array $options = array()){
+    global $base_url;
+    $replacements = array();
+    if($type == 'yakforms-limitations'){
+        foreach($tokens as $name => $original){
+            switch ($name){
+                case 'forms-per-user':
+                    $replacements[$original] = variable_get('yakforms_forms_per_user_limit', 0);
+                    break;
+                case 'submissions-per-form':
+                    $replacements[$original] = variable_get('yakforms_submissions_per_form_limit', 0);
+                    break;
+                case 'form-lifetime':
+                    $replacements[$original] = variable_get('yakforms_expiration_period_default_value', 0);
+                    break;
+            }
+            if($replacements[$original] == 0){
+                $replacements[$original] = t("No limitation");
+            }
+        }
+    }
+    if($type == 'yakforms-form'){
+        module_load_include('inc', 'yakforms', 'includes/yakforms.util');
+        $form_node = $data['node'];
+        foreach($tokens as $name => $original){
+            switch($name){
+                case 'clone-url':
+                    $replacements[$original] = $base_url . '/node/' . $form_node->nid . '/clone/confirm';
+                    break;
+                case 'expiration-date':
+                    // Return print-ready expiration date
+                    $replacements[$original] =
+                        format_date(_get_form_expiration_date($form_node), 'long');
+                    break;
+                case 'deletion-date':
+                    $deletion_date = new DateTime();
+                    $deletion_date->setTimestamp(_get_form_expiration_date($form_node));
+                    $deletion_date->modify(
+                        variable_get('yakforms_deletion_period_value', 9) . " weeks"
+                    );
+                    // Return print-ready deletion date
+                    $replacements[$original] =
+                        format_date($deletion_date->getTimestamp(), 'long');
+                    break;
+                case 'submission-limit':
+                    $replacements[$original] = _get_form_submission_limit($form_node);
+                    break;
+                case 'submissions' :
+                    $replacements[$original] = _form_has_submissions($form_node);
+                    break;
+            }
+        }
+    }
+    if($type == 'yakforms-user'){
+        $form_user = $data['user'];
+        foreach($tokens as $name => $original){
+            switch($name){
+                case 'my-forms':
+                    $replacements[$original] = $base_url .'/user' . $form_user->uid . '/forms';
+                    break;
+            }
+        }
+    }
+    return $replacements;
+}
+
+/**
+ * Acess callback for /node/add/form1 : forbids a user to create over a given number of forms.
+ *
+ * @return void
+ */
+function _yakforms_check_users_forms() {
+    global $user;
+    // If the user is not logged in, deny access.
+    if ($user->uid === 0) {
+        return FALSE;
+    }
+    // If the user is admin, grant access (admin is master here)
+    if ($user->uid === "1") {
+        return TRUE;
+    }
+    // Get the user's total number of forms.
+    $results = db_select('node', 'n')
+        ->fields('n')
+        ->condition('type', 'form1')
+        ->condition('uid', $user->uid)
+        ->countQuery()
+        ->execute()
+        ->fetchField();
+    if ($results >= variable_get('yakforms_forms_per_user_limit')) {
+        drupal_set_message(t("Your account has reached this site's maximum number of forms. Please delete some of your unused forms in 'My forms' before trying to create a new one."), 'warning', FALSE);
+        drupal_set_message(t("This site's allows to create the maximum following number of forms : @number", array('@number' => variable_get('yakforms_forms_per_user_limit'))), 'warning', FALSE);
+        return FALSE;
+    }
+    return TRUE;
+}

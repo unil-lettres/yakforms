@@ -42,6 +42,8 @@ Copy & rename the **docker-compose.override.yml.prod** file to **docker-compose.
 
 You can replace the values if needed, but the default ones should work for production.
 
+Don't forget to also copy & rename the **example.env** file to **.env**, and change the values for the production environment.
+
 Build & run all the containers for this project:
 
 `docker-compose up -d`

@@ -28,3 +28,8 @@ COPY ./views/frontpage-en.html /var/www/html/profiles/yakforms_profile/modules/y
 # Create directory to store uploaded form files
 RUN mkdir -p /var/www/html/sites/default/files/forms/
 RUN chown -R www-data:www-data /var/www/html/sites/default/files/
+
+# Copy the script to modify the default Drupal settings into the image, make it executable and run it
+COPY ./conf/modify-settings.sh /modify-settings.sh
+RUN chmod +x /modify-settings.sh
+RUN /modify-settings.sh

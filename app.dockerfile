@@ -1,10 +1,42 @@
 FROM drupal:7-php7.4-fpm-bullseye
 
-# Install needed PHP extensions
-RUN apt update && apt install -y nano libldap2-dev && docker-php-ext-install ldap
-
 # https://framagit.org/yakforms/yakforms
-ARG YAK_COMMIT=4081c97043d923c8fdf285fc17cae62c48a78c5a
+ENV YAK_COMMIT=4081c97043d923c8fdf285fc17cae62c48a78c5a
+
+ENV COMPOSER_VERSION=2.6
+ENV PSQL_CLIENT_VERSION=16
+# Drush 8.x is the latest Drupal 7 compatible version
+ENV DRUSH_VERSION=8.4
+
+# Install needed packages
+RUN apt update &&  \
+    apt install -y \
+    nano \
+    curl \
+    wget \
+    unzip \
+    lsb-release \
+    gnupg2 \
+    libldap2-dev
+
+# Install specific version of the PostgreSQL client
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
+    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
+    apt update && \
+    apt install -y postgresql-client-$PSQL_CLIENT_VERSION
+
+# Install specific version of Composer
+RUN curl --silent --show-error https://getcomposer.org/installer | php -- \
+    --$COMPOSER_VERSION \
+    --install-dir=/usr/local/bin --filename=composer && \
+    ln -s /root/.composer/vendor/bin/drush /usr/local/bin/drush
+
+# Install specific version of Drush
+RUN composer global require drush/drush:$DRUSH_VERSION && \
+    composer global update
+
+# Install needed php extensions
+RUN apt-get clean; docker-php-ext-install ldap
 
 # Install Yakforms profile
 RUN curl https://framagit.org/yakforms/yakforms/-/archive/$YAK_COMMIT/yakforms-$YAK_COMMIT.tar.gz?path=profiles/yakforms_profile -o /tmp/yakforms-$YAK_COMMIT.tar.gz && \
@@ -19,6 +51,8 @@ COPY ./fix/Form.php /var/www/html/profiles/yakforms_profile/modules/form_builder
 COPY ./fix/file.inc /var/www/html/profiles/yakforms_profile/modules/webform/components/file.inc
 COPY ./fix/webform_charts.module /var/www/html/profiles/yakforms_profile/modules/webform_charts/webform_charts.module
 COPY ./fix/yaktheme.js /var/www/html/profiles/yakforms_profile/themes/yaktheme/js/yaktheme.js
+COPY ./fix/cleaning.css /var/www/html/profiles/yakforms_profile/themes/yaktheme/css/cleaning.css
+COPY ./fix/header.css /var/www/html/profiles/yakforms_profile/themes/yaktheme/css/header.css
 COPY ./fix/bootstrap.inc /var/www/html/includes/bootstrap.inc
 
 # Replace homepage templates

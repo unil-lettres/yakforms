@@ -1,0 +1,95 @@
+/*
+  = .visually-hidden
+  (for screen reader only)
+*/
+.front #what h2,
+#block-yakforms-yakforms-create-form h2,
+#edit-field-form1-expiration label,           /* redondant with fieldset title (not realy a fieldset) */
+#edit-field-form1-template .form-checkboxes label { /* redondant with fieldset title */
+    position: absolute!important;
+    width: 1px!important;
+    height: 1px!important;
+    padding: 0!important;
+    margin: -1px!important;
+    overflow: hidden!important;
+    clip: rect(0,0,0,0)!important;
+    white-space: nowrap!important;
+    border: 0!important;
+}
+/* On front page */
+/* - tabs, title, author, publication date */
+.front #content h1.title,
+.front #content .tabs,
+.front #content .meta.submitted,
+    /* On not-logged-in pages */
+    /* - sign-in form */
+.not-logged-in #sidebar-first,
+    /* On add/form page */
+    /* - banner or logo are illustrations so alt and title attributes must not be set for a11y */
+#edit-field-form1-image .image-widget-data .form-item,
+    /* - template description visibility is toggled via yaktheme.js */
+#edit-field-form1-template-desc,
+    /* - attached file don't need a visibility status */
+#edit-field-form1-file table .checkbox,
+    /* - form component key (only drupal admin need that) */
+#form-builder .machine-name-source + .field-suffix,
+    /* - size setting disabled on input */
+#form-builder .form-item-size,
+    /* - size setting disabled on textarea */
+#form-builder .form-item-cols,
+    /* - contact author not needed on some page */
+    /* On Webform */
+.page-node-webform #block-yakforms-yakforms-contact-form-block,
+.page-node-webform-results #block-yakforms-yakforms-contact-form-block,
+.page-node-delete #block-yakforms-yakforms-contact-form-block,
+    /* - password warning not needed on some page */
+.page-node-webform #block-yakforms-yakforms-no-password,
+.page-node-webform-results #block-yakforms-yakforms-no-password,
+.page-node-delete #block-yakforms-yakforms-no-password,
+    /* - error double template */
+#page-wrapper ~ #page-wrapper,
+.main-container ~ .main-container,
+    /* - ip address (anonymous) on results */
+.page-node-webform-results:not(.admin-menu):not(.page-node-webform-results-analysis) #block-system-main table th:nth-of-type(4),
+.page-node-webform-results:not(.admin-menu):not(.page-node-webform-results-analysis) #block-system-main table td:nth-of-type(4),
+    /* - html guidelines */
+.page-node-webform-configure .filter-guidelines,
+    /* - text format + help */
+.page-node-webform-configure .form-item-confirmation-format,
+.page-node-webform-configure #edit-confirmation-format-help,
+    /* - modern browsers already have a grip */
+#main .grippie,
+    /* - hiding standard webform tab */
+.page-node-webform .tabs ul.secondary li:nth-child(2),
+    /* - hidding some confusing classes */
+.webform-component-number > span:nth-child(4),
+div.form-item.form-type-checkbox.form-item-webform-private,
+div.form-item.form-type-checkbox.form-item-disabled,
+div.form-item.form-type-textfield.form-item-wrapper-classes,
+div.form-item.form-type-textfield.form-item-css-classes,
+    /* - hiding some confusing configuration options */
+fieldset#edit-role-control.collapsible.form-wrapper.collapse-processed,
+div.form-item.form-type-textfield.form-item-next-serial {
+    display: none;
+}
+
+#admin-menu {
+    z-index: 1003;
+}
+
+/* remove glowing around text percentage on pie charts */
+.highcharts-data-labels > g > text > tspan {
+    text-shadow: none;
+}
+
+/* trailing margin */
+#block-yakforms-yakforms-create-form p:last-of-type {
+    margin: 0;
+}
+
+/* Fix long titles of section legends [where ?] (tmp disabled)
+legend {
+  overflow: auto;
+  height: 20%;
+}
+*/

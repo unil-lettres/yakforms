@@ -1,0 +1,226 @@
+/*
+  #highligted block refactored
+  as a BS5 .navbar
+*/
+#highlighted {
+    background: var(--c-bg-navbar);
+    color: var(--c-txt-navbar);
+    font-size: 100%;
+    border: none;
+    padding: .5rem 0;
+}
+
+#highlighted .region {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    #highlighted .region {
+        justify-content: space-between;
+    }
+}
+
+.page-node-add-form1 #highlighted .region {
+    flex-direction: column;
+}
+
+#highlighted h1,
+#highlighted a,
+#highlighted a:hover,
+#highlighted a:focus {
+    color: var(--c-txt-navbar);
+    text-decoration: none;
+}
+
+#highlighted header a { /*  brand */
+    display:block;
+    padding: .3125rem .75rem;
+    font-size: 1.5rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+#highlighted .lead, /* not needed in a navbar */
+#secondary-menu { /* not needed, duplicate menu */
+    display: none;
+}
+
+#highlighted h1,
+#highlighted .content {
+    margin: 0;
+    line-height: normal;
+}
+
+#block-yakforms-yakforms-header .content {
+    line-height: 0; /* ??? */
+}
+
+#highlighted .region #block-yakforms-yakforms-user-header {
+    display: flex;
+    font-size: 1rem;
+}
+
+#highlighted .user-block-connect { /* refactored in yaktheme.js */
+    display: none;
+}
+
+#highlighted .navbar-nav {
+    display:flex;
+    align-items: center;
+}
+
+/*
+  BS5 .dropdown without js
+  (:focus-within is used to toggle visibility)
+*/
+.dropdown {
+    display: block;
+    position:relative
+}
+
+.dropdown button:not(.button) {
+    background: var(--c-bg-navbar-dd);
+    border: none;
+    border-radius: 2rem;
+    color: var(--c-txt-navbar-dd);
+    padding: 5px 10px;
+    margin: .5rem 0 .5rem .5rem;
+}
+
+.dropdown button:not(.button):hover,
+.dropdown button:not(.button):focus {
+    background:  var(--c-bg-navbar-dd-active);
+    outline: 0;
+}
+
+.dropdown button:focus {
+    outline: 0;
+    box-shadow: 0 0 0 .2rem var(--c-outline-shadow);
+}
+
+.dropdown-menu {
+    position:absolute;
+    top:100%;
+    right:0;
+    z-index:1000;
+    display: none;
+    float:left;
+    min-width: 10rem;
+    padding: .5rem 0 !important;
+    margin: 0 !important;
+    font-size: 1rem;
+    text-align: left;
+    list-style: none;
+    background-color:var(--c-bg-input);
+    background-clip: padding-box;
+    border:1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+}
+
+.dropdown-menu > li > a {
+    display: block;
+    padding: .25rem 1rem !important;
+    clear:both;
+    font-weight: 400;
+    text-decoration:none;
+    color: var(--c-txt-input) !important;
+    white-space: nowrap;
+}
+
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+    color: var(--c-txt-input);
+    background-color:var(--c-highlighted) !important;
+}
+
+#highlighted .dropdown-toggle::before {
+    content: '';
+    background-color: var(--c-txt-navbar-dd);
+    display: inline-block;
+    mask-image: var(--i-user-circle);
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    -webkit-mask-image: var(--i-user-circle);
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center center;
+    width: 1.875rem;
+    height: 1.875rem;
+    vertical-align: middle;
+}
+
+#highlighted .dropdown-menu a::before {
+    content: '';
+    background-color: var(--c-secondary-dark);
+    display: inline-block;
+    mask-repeat: no-repeat;
+    mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center center;
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: text-top;
+    margin-right: .25rem;
+}
+
+#highlighted .dropdown-menu a[href*="form1"]::before {
+    mask-image: var(--i-file);
+    -webkit-mask-image: var(--i-file);
+}
+
+#highlighted .dropdown-menu a[href$="templates"]::before {
+    mask-image: var(--i-clone);
+    -webkit-mask-image: var(--i-clone);
+}
+
+#highlighted .dropdown-menu a[href*="user"]::before {
+    mask-image: var(--i-user);
+    -webkit-mask-image: var(--i-user);
+}
+
+#highlighted .dropdown-menu a[href$="forms"]::before {
+    mask-image: var(--i-file);
+    -webkit-mask-image: var(--i-file);
+}
+
+#highlighted .dropdown-menu a[href$="logout"]::before {
+    mask-image: var(--i-sign-out);
+    -webkit-mask-image: var(--i-sign-out);
+}
+
+.dropdown:focus-within .dropdown-menu,
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.caret {
+    display:inline-block;
+    width:0;
+    height:0;
+    margin-left:2px;
+    vertical-align:middle;
+    border-top:4px dashed;
+    border-top:4px solid\9;
+    border-right:4px solid transparent;
+    border-left:4px solid transparent
+}
+
+/* @media (max-width: 768px) {
+  #highlighted a[href*="templates"] {
+    display: none;
+  }
+} */
+
+/* Highligted add/form warning */
+#block-yakforms-yakforms-create-form {
+    background: var(--c-bg-accent);
+    color: var(--c-txt-accent);
+    border-radius: .25rem;
+    margin-bottom: -2.5rem;
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    max-width: 800px;
+}

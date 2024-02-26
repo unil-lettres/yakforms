@@ -69,17 +69,32 @@ body {
 
 /* Homepage */
 
-.front #intro .buttons {
-    margin: 10rem 1rem
-}
+.front {
+    .row {
+        justify-content: center;
+    }
 
-.front #intro .buttons .btn {
-    line-height: 2.5;
-    width: 20rem;
+    #intro {
+        filter: none;
+        background-color: white;
+
+        .buttons {
+            margin: 10rem 1rem;
+
+            .btn {
+                line-height: 2.5;
+                width: 20rem;
+            }
+        }
+    }
 }
 
 .front #intro::after,
-.front #intro::before{
+.front #intro::before {
     background-image: none;
     content: none;
+}
+
+h1, h2, h3, h4, h5, h6, h1 > *, h1#page-title {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

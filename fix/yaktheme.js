@@ -59,13 +59,11 @@ jQuery(function($){
 
         // Don't replace the progress bar if the current title is set to null
         // (avoiding leftover characters)
-        if(currentTitle===""){
-            return;
+        if(currentTitle!==""){
+            // Replace progress bar with textual element
+            $(".webform-progressbar")
+                .replaceWith("<h4>"+ currentTitle + ": " + currentPage + " / " + lastPage + "</h5>");
         }
-
-        // Replace progress bar with textual element
-        $(".webform-progressbar")
-            .replaceWith("<h4>"+ currentTitle + ": " + currentPage + " / " + lastPage + "</h5>");
     }
 
     if ($('body').hasClass('logged-in')) {

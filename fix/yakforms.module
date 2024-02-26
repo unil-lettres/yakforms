@@ -364,7 +364,7 @@ function yakforms_block_view($delta) {
             $block['content']['#markup'] .= '<div>';
             $block['content']['#markup'] .= "<a href='{$base_url}/fonctionnalites' class='btn btn-default btn-sm' role='button'>" . t("Features") . "</a>";
             $block['content']['#markup'] .= ' </div> </div>';
-            $block['content']['#markup'] .= '</div class="user-block-connect">';
+            $block['content']['#markup'] .= '</div>';
             break;
 
         case 'yakforms_user_header':
@@ -575,6 +575,10 @@ function yakforms_webform_submission_load(&$submissions) {
     }
     else {
         foreach ($submissions as $sid => $submission) {
+            if($user->uid != 0 && $user->uid == $submission->uid) {
+                continue;
+            }
+
             // If called for, anonymize uid and ip of submission before display.
             $submission->uid = 0;
             $submission->name = 'Anonymous';

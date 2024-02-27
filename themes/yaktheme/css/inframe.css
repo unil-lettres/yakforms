@@ -1,0 +1,28 @@
+body.inframe #highlighted,
+body.inframe #footer-wrapper .content  {
+   display:none;
+}
+
+body.inframe #footer-wrapper h2 {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: italic;
+  text-align: right;
+}
+
+body.inframe #footer-wrapper .region-footer {
+  margin: 0;
+}
+
+body.inframe #main {
+  margin-top: 0;
+  margin-bottom: 0;
+  box-shadow: none;
+}
+
+body.inframe #page,
+body.inframe #page-wrapper,
+body.inframe #main-wrapper,
+body.inframe #footer-wrapper {
+  background: var(--c-bg-lite) !important;
+}

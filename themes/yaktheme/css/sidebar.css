@@ -1,0 +1,97 @@
+/* Post-it */
+/*
+  Block configuration button (for admin only)
+  sent to the end of the block.
+  We need space to add a "close" button
+*/
+#sidebar-first .block .contextual-links-wrapper {
+  bottom: 5px;
+  top: auto;
+}
+
+.front #sidebar-first {
+  display: none;
+}
+
+#sidebar-first .block {
+  background: var(--c-bg-lite2);
+  border: none;
+  border-top: 3px solid var(--c-secondary-dark);
+  box-shadow: 0 .125rem .25rem var(--c-secondary);
+  color: var(--c-txt-lite1);
+  position: fixed;
+  right: 2rem;
+  top: 10rem;
+  width: 260px;
+  z-index: 1;
+  max-height: calc((100vh - 200px));
+  overflow: auto;
+}
+
+#sidebar-first h2 {
+  color: var(--c-txt-lite1);
+  border-color: var(--c-bd-lite2);
+  text-shadow: none;
+}
+
+#sidebar-first #help-toggle + label,
+#sidebar-first #help-toggle {
+  border: 2px solid transparent;
+  border-radius: 50%;
+  display: block;
+  margin-top: -1rem;
+  padding: 1rem;
+  position: fixed;
+  top: 10rem; /* after navbar but not relative to #main */
+  right: .875rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+#sidebar-first #help-toggle + label {
+  background-color: var(--c-bg-lite2);
+  border-color: var(--c-secondary-dark);
+  font-size: 0px;
+  z-index: 2;
+}
+
+#sidebar-first #help-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: var(--c-secondary-dark);
+  background-image: none;
+  color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+  mask-size: 1rem;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  -webkit-mask-size: 1rem;
+  z-index: 3;
+}
+
+#sidebar-first #help-toggle:not(:checked) + label {
+  background-color: var(--c-warning-lite);
+  border-color: var(--c-warning);
+}
+
+#sidebar-first #help-toggle:not(:checked) {
+  background-color: var(--c-warning);
+  mask-image: var(--i-lightbulb);
+  -webkit-mask-image: var(--i-lightbulb);
+}
+
+#sidebar-first #help-toggle:not(:checked) ~ .block {
+  display: none;
+}
+
+#sidebar-first #help-toggle:checked {
+  mask-image: var(--i-close);
+  -webkit-mask-image: var(--i-close);
+}
+
+#sidebar-first #help-toggle:checked ~ .block {
+  display: block;
+}

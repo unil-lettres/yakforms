@@ -1,0 +1,16 @@
+
+@font-face {
+  font-family: 'Quando';
+  src: url('../fonts/Quando/Quando-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fonts/open-sans/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fonts/open-sans/OpenSans-Bold.ttf');
+  font-weight: bold;
+}

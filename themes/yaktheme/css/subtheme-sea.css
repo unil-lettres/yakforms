@@ -1,0 +1,54 @@
+body.sea {
+  --c-bg: #DBEAFE;
+}
+
+.sea #main {
+  --c-title: #155E75;
+  --c-txt: #0F172A;
+
+  --c-bg-accent: #0F766E;
+  --c-txt-accent: #fff;
+  --c-highlighted: #FEFCE8;
+
+  --c-link: #0E7490;
+  --c-link-hover: #0891B2;
+
+  --c-bd-primary: #0E7490;
+  --c-bd-page: #0891B2;;
+  --c-bd-lite: #CBD5E1;
+  --c-bd-lite2: #94A3B8;
+
+  --c-bg-lite: #F8FAFC;
+  --c-bg-lite2: #E2E8F0;
+  --c-bg-lite3: #CBD5E1;
+
+  --c-txt-lite1: #1E293B;
+  --c-txt-lite2: #334155;
+
+  /* Buttons / Alert */
+  --c-txt-btn: #fff;
+
+  --c-primary: #155E75;
+  --c-primary-dark: #164E63;
+
+  --c-secondary: #64748B;
+  --c-secondary-dark: #475569;
+
+  /* Form components */
+  --c-txt-label: #44403C;
+
+  --c-bg-input: #fff;
+  --c-bd-input: #CBD5E1;
+  --c-txt-input: #0F172A;
+  --c-bd-active: #0891B2;
+  --c-bg-checked: #155E75;
+
+  --c-bg-file: #BFDBFE;
+  --c-txt-file: #0F172A;
+  --c-txt-file-icon: #8cacd1;
+
+  --c-outline-shadow: #A5F3FCdd; /* p2 + alpha */
+
+  /* Footer */
+  --c-txt-signature: #0F766E;
+}

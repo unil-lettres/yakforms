@@ -1,0 +1,310 @@
+/* Page conditionals (webform) */
+#main #webform-conditionals-table input,
+#webform-conditionals-table select {
+  display: inline-block;
+  border-radius: .2rem;
+  font-size: .75rem;
+  margin: 0;
+  padding: .125rem .25rem;
+  vertical-align: middle;
+}
+
+#webform-conditionals-table select {
+  padding-right: 1.75rem;
+  background-position: right .25rem center;
+}
+
+#webform-conditionals-table .tabledrag-handle {
+  margin-left: 0;
+  position: absolute;
+}
+
+.webform-conditional {
+  background: linear-gradient(to right,
+    transparent 0,
+    transparent calc(2rem - 0.81px),
+    var(--c-bd-lite2) calc(2rem - 0.8px),
+    var(--c-bd-lite2) calc(2rem + 0.8px),
+    transparent calc(2rem + 0.81px),
+    transparent 100%);
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  max-width: 100%;
+}
+
+.webform-conditional-if {
+  position: relative;
+  left: auto;
+  margin-left: 1rem !important;
+  margin-top: 1rem !important;
+}
+
+.webform-conditional-rule {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0 2rem;
+  padding-left: 1.25rem;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.webform-conditional-rule .webform-indentation {
+  position: absolute;
+  height: 1.75rem;
+  border-left: 2px dashed var(--c-bd-lite);
+}
+
+.webform-conditional-rule .webform-indentation + .webform-conditional-condition {
+  border-left: 2px solid var(--c-bd-lite);
+  padding: .25rem 0 .25rem 1.25rem;
+}
+
+.webform-conditional-rule  .webform-indentation + .webform-indentation + .webform-conditional-condition {
+  margin-left: 1.25rem;
+}
+
+#webform-conditionals-ajax .webform-conditional-andor {
+  margin: 0 0 0 -2.5rem;
+  width: 100%;
+  order: 1;
+}
+
+.webform-conditional-rule .webform-indentation ~ .webform-conditional-andor {
+  padding-left: 1.325rem;
+}
+
+.webform-conditional-rule .webform-indentation + .webform-indentation ~ .webform-conditional-andor {
+  padding-left: 2.55rem;
+}
+
+#webform-conditionals-ajax .webform-conditional-if,
+#webform-conditionals-ajax .webform-conditional-andor .webform-andor,
+#webform-conditionals-ajax .webform-conditional-andor select {
+  background: var(--c-bg-lite2);
+  border: 2px solid var(--c-bd-lite2);
+  border-radius: 100%;
+  color: var(--c-secondary);
+  display: block;
+  font-weight: bold;
+  font-size: .875rem;
+  height: 2rem;
+  line-height: 1.75rem;
+  margin:0;
+  padding: 0;
+  text-align: center;
+  text-align-last:center;
+  text-transform: uppercase;
+  width: 2rem;
+}
+
+#webform-conditionals-ajax .webform-conditional-andor .webform-andor,
+#webform-conditionals-ajax .webform-conditional-andor select {
+  border-width: 1px;
+  font-size: .675rem;
+  height: 1.5rem;
+  line-height: 1.25rem;
+  width: 1.5rem;
+  margin-left: .5rem;
+}
+
+#webform-conditionals-ajax .webform-conditional-andor select {
+  background: var(--c-secondary);
+  border-color: var(--c-secondary);
+  color: var(--c-txt-btn);
+}
+
+#webform-conditionals-ajax .webform-conditional-andor select:hover,
+#webform-conditionals-ajax .webform-conditional-andor select:focus {
+  background: var(--c-secondary-dark);
+  border-color: var(--c-secondary-dark);
+}
+
+.webform-conditional > .webform-conditional-action {
+  font-weight: bold;
+  font-size: .875rem;
+  text-transform: uppercase;
+  background: var(--c-bg-lite3);
+  color: var(--c-secondary);
+  display: inline-flex;
+  padding: .5rem 0 .5rem .75rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.webform-conditional > .webform-conditional-action + .webform-conditional-action {
+  margin-top: -.5rem;
+}
+
+.webform-conditional-action .webform-conditional-operations {
+  margin-top: 1.5rem;
+}
+
+
+.webform-conditional-action + .webform-conditional-action  .webform-conditional-operations {
+  margin-top: .125rem;
+}
+
+.webform-conditional > .webform-conditional-action .webform-conditional-target,
+.webform-conditional > .webform-conditional-action .webform-conditional-invert {
+  margin-left: 2.5rem;
+}
+
+.webform-conditional > .webform-conditional-action + .webform-conditional-action {
+  color: var(--c-bg-lite3);
+  font-size: 0px;
+}
+
+.webform-conditional > .webform-conditional-action .webform-conditional-action > div > * {
+  color: var(--c-txt);
+  font-size: .875rem;
+}
+
+.webform-conditional-operations {
+  position: inherit;
+  margin-top: .25rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+#webform-conditionals-table input[value="conditional_end"] ~ .webform-conditional-operations {
+  background: var(--c-bg-lite2);
+  border: 1px solid var(--c-bd-lite);
+  border-radius: .2rem;
+  margin-left: -.25rem;
+  margin-bottom: .25rem;
+  margin: 0 0 .25rem -.25rem;
+  padding: 0;
+}
+
+.webform-conditional-rule .webform-indentation + input[value="conditional_end"] ~ .webform-conditional-operations {
+  margin-left: 1rem !important;
+}
+
+#webform-conditionals-table input[value="conditional_end"] ~ .webform-conditional-operations input {
+  margin: .125 .25rem;
+}
+
+/* parenthesis */
+#webform-conditionals-table input[value="conditional_start"] + .webform-conditional-condition,
+#webform-conditionals-table input[value="conditional_end"] + .webform-conditional-condition,
+/* duplicate operation buttons */
+#webform-conditionals-table input[value="conditional_start"] ~ .webform-conditional-operations {
+  display: none;
+}
+
+#webform-conditionals-table .webform-conditional-new input,
+#webform-conditionals-table .webform-conditional-rule-add[name$="subconditional"],
+#webform-conditionals-table .webform-conditional-rule-add[name$="add"],
+#webform-conditionals-table .webform-conditional-rule-remove,
+#webform-conditionals-table .webform-conditional-action-add,
+#webform-conditionals-table .webform-conditional-action-remove {
+  background: none;
+  font-size: 0 !important;
+  border: none;
+  background-color: var(--c-secondary);
+  mask-repeat: no-repeat;
+  mask-position: center center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  width: 1rem !important;
+  height: 1rem;
+  margin: .25rem !important;
+  padding: 0 !important;
+}
+
+#webform-conditionals-table .webform-conditional-rule-add[name$="subconditional"] {
+  mask-image: var(--i-plus-indent);
+  -webkit-mask-image: var(--i-plus-indent);
+  mask-position: right center;
+  -webkit-mask-position: right center;
+  width: 100% !important;
+}
+
+
+#webform-conditionals-table input[value="conditional_end"] ~ .webform-conditional-operations .webform-conditional-rule-add[name$="subconditional"] {
+  width: 1rem !important;
+}
+
+
+#webform-conditionals-table .webform-conditional-new input,
+#webform-conditionals-table .webform-conditional-rule-add[name$="add"],
+#webform-conditionals-table .webform-conditional-action-add {
+  mask-image: var(--i-plus);
+  -webkit-mask-image: var(--i-plus);
+  order: -1;
+}
+
+#webform-conditionals-table .webform-conditional-rule-remove,
+#webform-conditionals-table .webform-conditional-action-remove {
+  margin: .35rem !important;
+  mask-image: var(--i-trash);
+  order: -2;
+  -webkit-mask-image: var(--i-trash);
+  width: .75rem !important;
+  height: .75rem;
+}
+
+/*
+  Subcondition "remove" button is in fact an outdentation
+  (Is it really needed ?)
+*/
+#webform-conditionals-table input[value="conditional_end"] ~ .webform-conditional-operations .webform-conditional-rule-remove {
+  margin: .25rem !important;
+  mask-image: var(--i-outdent);
+  -webkit-mask-image: var(--i-outdent);
+  width: 1rem !important;
+  height: 1rem;
+}
+
+#webform-conditionals-table .webform-conditional-action-add {
+  display: none !important;
+}
+
+#webform-conditionals-table .webform-conditional-action:last-of-type .webform-conditional-action-add {
+  display: inline-block !important;
+}
+
+.webform-conditional-action .webform-conditional-condition,
+.webform-conditional-rule .webform-conditional-condition {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.webform-conditional-action .webform-conditional-condition > *,
+.webform-conditional-rule .webform-conditional-condition > * {
+  margin: 2px;
+}
+
+.webform-conditional-rule .webform-conditional-condition {
+  width: calc(100% - 3.5rem);
+}
+
+.webform-conditional-rule .webform-indentation + .webform-indentation + .webform-conditional-condition {
+  width: calc(100% - 4.75rem);
+}
+
+.webform-conditional-rule .webform-conditional-value {
+  flex-grow: 1;
+}
+
+.webform-conditional-action .webform-conditional-condition {
+  max-width: calc(100% - 3.25rem);
+}
+
+#webform-conditionals-table .webform-conditional-rule .webform-conditional-source,
+#webform-conditionals-table .webform-conditional-rule .webform-conditional-source select,
+#webform-conditionals-table .webform-conditional-rule .webform-conditional-value input,
+#webform-conditionals-table .webform-conditional-rule .webform-conditional-value select,
+#webform-conditionals-table .webform-conditional-action .webform-conditional-target,
+#webform-conditionals-table .webform-conditional-action .webform-conditional-target select {
+  display: block;
+  width: 100%;
+}
+
+/* disable >2 levels of subconditions */
+.webform-conditional-rule .webform-indentation + .webform-indentation ~ .webform-conditional-operations .webform-conditional-rule-add[name$="subconditional"] {
+  display: none !important;
+}

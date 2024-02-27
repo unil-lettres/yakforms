@@ -1,0 +1,113 @@
+
+.webform-progressbar-outer {
+  background: transparent;
+  border: none;
+  height: min-content;
+  margin: 3rem auto 2rem;
+}
+
+.webform-progressbar-page-label {
+  font-size: .75rem;
+}
+
+.webform-progressbar {
+  display:flex;
+  flex-direction:row;
+  flex-wrap: wrap;
+}
+
+.webform-progressbar-page[style] {
+  background: none;
+  border:none;
+  border-radius: 0;
+  display: inline-block;
+  left: initial !important;
+  margin:0 -5px;
+  padding: 10px 0 0;
+  position: relative;
+  height: auto;
+  width: 200px;
+  text-align:center;
+  vertical-align: top;
+}
+
+.webform-progressbar-page .webform-progressbar-page-number {
+  background: var(--c-bd-primary);
+  border-radius: 2rem;
+  color: var(--c-txt-btn);
+  display: inline-block;
+  font-size: .875rem;
+  font-weight: bold;
+  height: min-content;
+  line-height: 1rem;
+  min-width: 1rem;
+  padding: .25rem .5rem;
+}
+
+.webform-progressbar-page .webform-progressbar-page-label {
+  top: initial;
+  margin: 0;
+  display: block;
+  padding: .25rem .25rem 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.webform-progressbar-page::before {
+  background: var(--c-bd-primary);
+  content: '';
+  display: block;
+  height: .25rem;
+  width: 100%;
+  margin: 0 0 -1rem;
+}
+
+.webform-progressbar-page:first-of-type::before {
+  width: 50%;
+  margin-left: auto;
+}
+
+.webform-progressbar-page:last-of-type::before {
+  width: 50%;
+  margin-right: auto;
+}
+
+.webform-progressbar-page.current .webform-progressbar-page-number {
+  background: var(--c-primary);
+}
+
+.webform-progressbar-page .webform-progressbar-page-number::before {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: .75rem;
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.webform-progressbar-page:first-of-type .webform-progressbar-page-number::before,
+.webform-progressbar-page:last-of-type .webform-progressbar-page-number::before,
+.webform-progressbar-page.current .webform-progressbar-page-number::before {
+  margin-top: -.125rem;
+  margin-right: .125rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.webform-progressbar-page:first-of-type .webform-progressbar-page-number::before {
+  background-image: var(--i-flag);
+}
+
+.webform-progressbar-page:last-of-type .webform-progressbar-page-number::before {
+  background-image: var(--i-flag-checkered);
+}
+
+.webform-progressbar-page.current .webform-progressbar-page-number::before {
+  background-image: var(--i-map-maker-alt);
+  background-size: .6rem;
+}
+
+.webform-progressbar-inner {
+  display: none;
+}

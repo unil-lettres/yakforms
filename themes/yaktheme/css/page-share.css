@@ -1,0 +1,79 @@
+.page-node-share h2 { /* the first line is not inside <p> */
+  margin-top: 1rem;
+}
+
+.page-node-share .shareLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-node-share .shareLinks.clear\:both { /* temp fix */
+  width: 100%;
+}
+
+.page-node-share .shareLink {
+  margin: 1rem; /* = <p> */
+  width: 50px;
+  height: 50px;
+  padding: .5rem;
+}
+
+.page-node-share .shareLink a::before {
+  content: '';
+  display: inline-block;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.page-node-share .shareLink a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+}
+
+.page-node-share .diaspora {
+  background: #464646;
+}
+.page-node-share .diaspora a::before {
+  background-image: var(--i-diaspora);
+}
+
+.page-node-share .facebook {
+  background: #1877f2;
+}
+.page-node-share .facebook a::before {
+  background-image: var(--i-facebook);
+}
+
+.page-node-share .twitter {
+  background: #1da1f2;
+}
+.page-node-share .twitter a::before {
+  background-image: var(--i-twitter);
+}
+
+.page-node-share input,
+.page-node-share textarea  {
+  color: var(--c-txt-file);
+  background-color: var(--c-bg-file);
+  border: none;
+  border-radius: .5rem;
+  display: block;
+  font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  font-size: .875em;
+  line-height: 1.7142857;
+  margin: .5rem auto;
+  padding: .875rem 1rem;
+  outline: none;
+  overflow: hidden;
+  width: 100%;
+  max-width: 560px;
+  white-space: pre;
+  word-wrap: break-word;
+}

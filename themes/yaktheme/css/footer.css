@@ -1,0 +1,71 @@
+/* Contact + password warning */
+#block-yakforms-yakforms-contact-form-block {
+  margin-top: 2rem;
+  color: var(--c-txt-signature);
+  font-style: italic;
+  border-top: 1px solid var(--c-txt-signature);
+}
+
+#block-yakforms-yakforms-contact-form-block a[href$="/contact"] {
+  background-color: var(--c-txt-signature);
+  color: var(--c-txt-accent);
+  text-decoration: none;
+  padding: .125rem .5rem;
+  border-radius: .2rem;
+  font-size: .875rem;
+}
+
+#block-yakforms-yakforms-contact-form-block a[href$="/contact"]::before {
+  display: inline-block;
+  content: '';
+  background: var(--i-envelope) no-repeat center center;
+  width: .875rem;
+  height: .875rem;
+  margin: -.25rem 0 0;
+  vertical-align: middle;
+}
+
+#block-yakforms-yakforms-contact-form-block p {
+  margin-bottom: 0;
+}
+
+#block-yakforms-yakforms-contact-form-block h3,
+#block-yakforms-yakforms-contact-form-block p br {
+  display: none;
+}
+
+#block-yakforms-yakforms-no-password .content {
+  margin-top: 0;
+  color: var(--c-txt-signature);
+}
+
+/* Yakforms footer */
+#footer-wrapper {
+  background: var(--c-bg-footer);
+  color: var(--c-txt-footer);
+}
+
+#footer {
+  width: auto;
+  min-width: auto;
+  max-width: 800px;
+  padding: 1rem 2rem;
+  margin: 0 auto;
+  font-size: .85rem;
+  border: none;
+}
+
+#footer h2 {
+  font-size: 1.25rem;
+}
+
+#footer h2,
+#footer a,
+#footer a:hover,
+#footer a:focus {
+  color: var(--c-txt-footer);
+}
+
+#footer .region {
+  margin: 0px;
+}

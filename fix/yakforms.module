@@ -621,6 +621,7 @@ function _yakforms_user_has_access($account = NULL) {
  * submission.
  */
 function yakforms_webform_submission_actions($node, $submission) {
+    $actions = array(); // Initialize $actions as an empty array
     global $base_url;
     if (webform_results_access($node)) {
         $actions['back-to-results-action'] = array(

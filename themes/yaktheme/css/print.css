@@ -1,0 +1,167 @@
+html, .html, p, label, span {
+  font-size:10pt !important;
+  line-height:normal !important;
+}
+
+html, body {
+  margin:0;
+  padding:0;
+}
+
+#main, #content, section, .section, html, body, #page, #page-wrapper, #main-wrapper, .html, fieldset {
+  background:white !important;
+  width:100% !important;
+  max-width:100% !important;
+}
+
+#main {
+  box-shadow: 0 0;
+  margin:0 !important;
+  padding:0 !important;
+  max-width:100% !important;
+}
+
+.grippie {
+  display:none !important;
+}
+
+.grammalecte_menu_main_button {
+  display:none !important;
+}
+
+.grammalecte_menu {
+  display:none !important;
+}
+
+.form-actions {
+  display:none;
+}
+
+#block-block-21 {
+  display:none
+}
+
+#footer-wrapper {
+  display:none;
+}
+
+#page-title {
+  text-align:center
+}
+
+/* Dont display margins */
+fieldset, textarea, input[type="text"] {
+  border:0px !important;
+  margin:0;
+  background:white;
+}
+
+/* No margins on text area */
+input.form-text, textarea.form-textarea, select.form-select {
+    border: none;
+}
+
+.webform-component-textarea .grippie {
+  display: none;
+}
+
+/* Don't display file upload or select components */
+.webform-component-file, .webform-component-select > select {
+  display: none;
+}
+
+.description {
+  font-style: italic;
+}
+
+/* Handle radio and checkboxes */
+input[type="checkbox"], input[type="radio"]  {
+  margin-bottom: 0px!important;
+  vertical-align:middle;
+}
+
+label.option {
+  display: inline-block;
+}
+
+fieldset {
+  page-break-before: auto !important;
+  page-break-after: auto !important;
+}
+
+legend, .fieldset-legend {
+  font-weight:bold !important;
+  background:white !important;
+  border:0px !important;
+  font-size:14pt !important;
+}
+
+textarea {
+  height:10rem;
+}
+
+#highlighted, .tabs {
+  display:none;
+}
+
+input {
+  max-width: 100%!important;
+  margin-bottom: 50px!important;
+}
+
+.form-radio {
+  height:0.8em;
+  width:0.8em;
+}
+
+/* Handle date fields */
+.webform-component-date > div.webform-datepicker {
+  display: none;
+}
+
+.webform-component-date::after {
+  content: "____/____/____";
+  color: #a6a6a6;
+}
+
+/* Same for time fields */
+.webform-component-time > div > div > select {
+  display: none;
+}
+
+.webform-component-time > div.webform-container-inline {
+  display: none;
+}
+
+.webform-component-time::after {
+  content : "_____ : _____ ";
+  color: #a6a6a6;
+}
+
+/* Handle tables */
+.webform-component-grid {
+  max-width: 90%;
+}
+
+.webform-grid-option, .webform-grid-question {
+  border-color: black;
+}
+
+td > div > input.form-radio {
+  display: none;
+}
+
+/* Dont display link to contact form... */
+#block-framaforms-framaforms-contact-form-block {
+  display: none;
+}
+
+/* ...or password warning... */
+#block-framaforms-framaforms-no-password {
+  display: none;
+}
+
+/* ...or progress bar */
+.webform-progressbar {
+  display: none;
+}

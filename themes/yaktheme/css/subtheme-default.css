@@ -1,0 +1,166 @@
+
+/*
+  Only change the primary default color
+  Colors come form
+  https://tailwindcss.com/docs/customizing-colors#color-palette-reference
+*/
+body.red {
+  --c-bg: #FEE2E2; /* p1 */
+}
+
+.red #main {
+  --c-title: #B91C1C; /* p8 */
+  --c-highlighted: #FEE2E2; /* p1 */
+
+  --c-link: #DC2626; /* p7 */
+  --c-link-hover: #EF4444; /* p6 */
+
+  --c-bd-primary: #DC2626; /* p7 */
+  --c-bd-page: #EF4444; /* p6 */
+
+  --c-primary:#B91C1C; /* p8 */
+  --c-primary-dark: #7F1D1D; /* p9 */
+
+  --c-bd-active: #EF4444; /* p6 */
+  --c-bg-checked: #B91C1C; /* p8 */
+
+  --c-outline-shadow: #FECACADD; /* p2 + alpha */
+}
+
+body.lime {
+  --c-bg: #ECFCCB; /* p1 */
+}
+
+.lime #main {
+  --c-title: #3F6212; /* p8 */
+  --c-highlighted: #ECFCCB; /* p1 */
+
+  --c-link: #4D7C0F; /* p7 */
+  --c-link-hover: #65A30D; /* p6 */
+
+  --c-bd-primary: #4D7C0F; /* p7 */
+  --c-bd-page: #65A30D; /* p6 */
+
+  --c-primary: #3F6212; /* p8 */
+  --c-primary-dark: #365314; /* p9 */
+
+  --c-bd-active: #65A30D; /* p6 */
+  --c-bg-checked: #3F6212; /* p8 */
+
+  --c-outline-shadow: #D9F99Ddd; /* p2 + alpha */
+}
+
+body.emerald {
+  --c-bg: #D1FAE5; /* p1 */
+}
+
+.emerald #main {
+  --c-title: #065F46; /* p8 */
+  --c-highlighted: #D1FAE5; /* p1 */
+
+  --c-link: #047857; /* p7 */
+  --c-link-hover: #059669; /* p6 */
+
+  --c-bd-primary: #047857; /* p7 */
+  --c-bd-page: #059669; /* p6 */
+
+  --c-primary: #065F46; /* p8 */
+  --c-primary-dark: #064E3B; /* p9 */
+
+  --c-bd-active: #059669; /* p6 */
+  --c-bg-checked: #065F46; /* p8 */
+
+  --c-outline-shadow: #A7F3D0dd; /* p2 + alpha */
+}
+
+body.lightblue {
+  --c-bg: #E0F2FE; /* p1 */
+}
+
+.lightblue #main {
+  --c-title: #075985; /* p8 */
+  --c-highlighted: #E0F2FE; /* p1 */
+
+  --c-link: #0369A1; /* p7 */
+  --c-link-hover: #0284C7; /* p6 */
+
+  --c-bd-primary: #0369A1; /* p7 */
+  --c-bd-page: #0284C7; /* p6 */
+
+  --c-primary: #075985; /* p8 */
+  --c-primary-dark: #0C4A6E; /* p9 */
+
+  --c-bd-active: #0284C7; /* p6 */
+  --c-bg-checked: #075985; /* p8 */
+
+  --c-outline-shadow: #BAE6FDdd; /* p2 + alpha */
+}
+
+body.indigo {
+  --c-bg: #E0E7FF; /* p1 */
+}
+
+.indigo #main {
+  --c-title: #3730A3; /* p8 */
+  --c-highlighted: #E0E7FF; /* p1 */
+
+  --c-link: #4338CA; /* p7 */
+  --c-link-hover: #4F46E5; /* p6 */
+
+  --c-bd-primary: #4338CA; /* p7 */
+  --c-bd-page: #4F46E5; /* p6 */
+
+  --c-primary: #3730A3; /* p8 */
+  --c-primary-dark: #312E81; /* p9 */
+
+  --c-bd-active: #4F46E5; /* p6 */
+  --c-bg-checked: #3730A3; /* p8 */
+
+  --c-outline-shadow: #C7D2FEdd; /* p2 + alpha */
+}
+
+body.purple {
+  --c-bg: #EDE9FE; /* p1 */
+}
+
+.purple #main {
+  --c-title: #6B21A8; /* p8 */
+  --c-highlighted: #EDE9FE; /* p1 */
+
+  --c-link: #7E22CE; /* p7 */
+  --c-link-hover: #9333EA; /* p6 */
+
+  --c-bd-primary: #7E22CE; /* p7 */
+  --c-bd-page: #9333EA; /* p6 */
+
+  --c-primary: #6B21A8; /* p8 */
+  --c-primary-dark: #581C87; /* p9 */
+
+  --c-bd-active: #9333EA; /* p6 */
+  --c-bg-checked: #6B21A8; /* p8 */
+
+  --c-outline-shadow: #DDD6FEdd; /* p2 + alpha */
+}
+
+body.rose {
+  --c-bg: #FFE4E6; /* p1 */
+}
+
+.rose #main {
+  --c-title: #BE123C; /* p8 */
+  --c-highlighted: #FFE4E6; /* p1 */
+
+  --c-link: #E11D48; /* p7 */
+  --c-link-hover: #F43F5E; /* p6 */
+
+  --c-bd-primary: #E11D48; /* p7 */
+  --c-bd-page: #F43F5E; /* p6 */
+
+  --c-primary: #BE123C; /* p8 */
+  --c-primary-dark: #9F1239; /* p9 */
+
+  --c-bd-active: #F43F5E; /* p6 */
+  --c-bg-checked: #BE123C; /* p8 */
+
+  --c-outline-shadow: #FECDD3dd; /* p2 + alpha */
+}

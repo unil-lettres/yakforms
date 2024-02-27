@@ -1,0 +1,86 @@
+
+/* = .container from BS5 */
+@media (min-width: 576px) {
+  .front .container,
+  #highlighted .region,
+  #main-wrapper,
+  #footer-wrapper {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .front .container,
+  #highlighted .region,
+  #main-wrapper,
+  #footer-wrapper {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .front .container,
+  #highlighted .region,
+  #main-wrapper,
+  #footer-wrapper {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .front .container,
+  #highlighted .region,
+  #main-wrapper,
+  #footer-wrapper {
+    max-width: 1140px;
+  }
+}
+
+.front .container,
+#highlighted .region,
+#main-wrapper,
+#footer-wrapper {
+  width: 100%;
+  padding: 0;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
+#page-wrapper,
+#page {
+  min-width: 300px; /* needed ? */
+  background: var(--c-bg);
+}
+
+#main-wrapper {
+  background: transparent;
+  padding: 0;
+}
+
+#main {
+  margin: 2rem auto 1rem;
+  width: auto;
+  max-width: 800px;
+  background: var(--c-bg-lite);
+  padding: 1rem 2rem;
+  border-top: 5px solid var(--c-bd-page);
+}
+
+.page-node-webform-form-builder #main,
+.page-node-webform.page-node #main {
+  max-width: calc(800px + 240px); /* form preview = form width */
+}
+
+@media (max-width: 576px) {
+  #main {
+    margin-top: 0;
+  }
+}
+
+#content .section {
+  padding: 0;
+  position: relative;
+}
+
+.no-sidebars #content,
+.one-sidebar #content {
+  width: 100%;
+}

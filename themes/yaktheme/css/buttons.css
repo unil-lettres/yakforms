@@ -1,0 +1,172 @@
+
+/* Buttons */
+input.form-submit,
+#edit-cancel,
+#edit-cancel--2,
+#webform-validation-manage-rule a[href$="webform/validation"],
+.button,
+.button:link,
+.button:visited {
+  background: var(--c-secondary);
+  border: 1px solid var(--c-secondary);
+  border-radius: .25rem;
+  color: var(--c-txt-btn) !important;
+  padding: .375rem .75rem;
+  margin: .5rem .5rem .5rem 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: .875rem;
+  line-height: 1.5;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+input.form-submit:hover,
+input.form-submit:focus,
+#edit-cancel--2:hover,
+#edit-cancel--2:focus,
+.button:hover,
+.button:focus {
+  background: var(--c-secondary-dark);
+  border-color: var(--c-secondary-dark);
+  text-decoration: none;
+}
+
+input.form-submit:focus,
+.button:focus {
+  outline: 0;
+  box-shadow: 0 0 0 .2rem var(--c-outline-shadow);
+}
+
+/* secondary */
+#edit-cancel,
+#edit-cancel--2,
+#edit-reset,
+#webform-validation-manage-rule a[href$="webform/validation"] { /* outline */
+  background: transparent;
+  border: 1px solid var(--c-secondary);
+  color: var(--c-secondary-dark) !important;
+}
+
+#edit-cancel:hover,
+#edit-cancel:focus,
+#edit-cancel--2:hover,
+#edit-cancel--2:focus,
+#webform-validation-manage-rule a[href$="webform/validation"]:hover,
+#webform-validation-manage-rule a[href$="webform/validation"]:focus {
+  background: var(--c-secondary-dark);
+  border: 1px solid var(--c-secondary-dark);
+  color:  var(--c-txt-btn) !important;
+}
+
+/* primary */
+#edit-submit,
+#edit-save,
+#edit-actions-save,
+#edit-actions-submit,
+input.webform-submit {
+  background: var(--c-primary);
+  border-color:  var(--c-primary);
+}
+
+#edit-submit:hover,
+#edit-submit:focus,
+#edit-save:hover,
+#edit-save:focus,
+#edit-actions-save:hover,
+#edit-actions-save:focus,
+#edit-actions-submit:hover,
+#edit-actions-submit:focus,
+input.webform-submit:hover,
+input.webform-submit:focus {
+  background:  var(--c-primary-dark);
+  border-color:  var(--c-primary-dark);
+}
+
+/* info */
+.button.btn-info {
+  background:  var(--c-info) !important;
+  border-color:  var(--c-info) !important;
+  color:  var(--c-txt-btn) !important;
+}
+
+.button.btn-info:hover,
+.button.btn-info:focus {
+  background:  var(--c-info-dark) !important;
+  border-color:  var(--c-info-dark) !important;
+  color:  var(--c-txt-btn) !important;
+}
+
+/* danger */
+.page-node-webform-validation-delete #edit-submit,
+.page-node-webform-results-clear #edit-submit,
+.page-node-delete #edit-submit {
+  background: var(--c-danger);
+  border: 1px solid var(--c-danger);
+  color:  var(--c-txt-btn) !important;
+}
+
+#edit-delete { /* outline */
+  background: transparent;
+  border: 1px solid var(--c-danger);
+  color: var(--c-danger-dark) !important;
+}
+
+.page-node-webform-validation-delete #edit-submit:hover,
+.page-node-webform-validation-delete #edit-submit:focus,
+.page-node-webform-results-clear #edit-submit:hover,
+.page-node-webform-results-clear #edit-submit:focus,
+.page-node-delete #edit-submit:hover,
+.page-node-delete #edit-submit:focus,
+#edit-delete:hover,
+#edit-delete:focus {
+  background: var(--c-danger-dark);
+  border: 1px solid var(--c-danger-dark);
+  color: var(--c-txt-btn) !important;
+}
+
+/* Circle button (actions) */
+#webform-emails-form a[href*="/webform/emails/"],
+#webform-emails-form a[href*="/webform/confirmation"],
+#webform-emails-form input[name^="delete_email"],
+#webform-emails-form input[name^="delete_confirmation"],
+#webform-validation-overview-form a[href*="/webform/validation/edit/"],
+#webform-validation-overview-form a[href*="/webform/validation/delete/"],
+.page-node-webform-results:not(.page-node-webform-results-table) table a[href*="submission"],
+.page-user-forms table .views-field-nid a,
+.page-user-forms table .views-field-delete-node a {
+  background-color: var(--c-secondary);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  border-radius: 50%;
+  border: none;
+  display: block;
+  font-size: 0px;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.page-node-webform-results:not(.page-node-webform-results-table) table a[href*="submission"] {
+  background-image: var(--i-eye);
+}
+
+#webform-emails-form a[href*="/webform/emails/"],
+#webform-emails-form a[href*="/webform/confirmation"],
+#webform-validation-overview-form a[href*="/webform/validation/edit/"],
+.page-node-webform-results table a[href*="/edit?"],
+.page-user-forms table .views-field-nid a {
+  background-color: var(--c-primary) !important;
+  background-image: var(--i-pencil) !important;
+}
+
+#webform-emails-form input[name^="delete_email"],
+#webform-emails-form input[name^="delete_confirmation"],
+#webform-validation-overview-form a[href*="/webform/validation/delete/"],
+.page-node-webform-results table a[href*="/delete?"],
+.page-user-forms table .views-field-delete-node a {
+  background-color: var(--c-danger) !important;
+  background-image: var(--i-trash) !important;
+}

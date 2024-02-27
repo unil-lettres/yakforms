@@ -1,0 +1,60 @@
+/* Page analysis (webform) */
+.webform-analysis-data {
+  margin: 0 -12px; /* 12px = .webform-analysis-component padding*/
+}
+
+.webform-analysis-component {
+  width: 50%;
+}
+
+.page-node-webform-results-analysis- .webform-analysis-component,
+.webform-analysis-component-grid {
+  width: 100%;
+}
+
+.page-node-webform-results-analysis- .webform-analysis-data {
+  margin: 0;
+}
+
+#webform-charts-edit-chart .chart-preview-wrapper {
+  width: 60%;
+}
+
+#webform-charts-edit-chart .chart-form-wrapper {
+  width: 40%;
+}
+
+#webform-charts-edit-chart .chart-form {
+  border: none;
+  border-radius: .5rem;
+  background: var(--c-bg-lite2);
+  margin: .5rem 0;
+  padding: .5rem 1rem;
+}
+
+#webform-charts-edit-chart .chart-form #edit-type {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#webform-charts-edit-chart .chart-form .form-type-radio {
+  width: 50%;
+}
+
+#webform-charts-edit-chart .webform-charts-colors {
+  width: 100%;
+}
+
+#webform-charts-edit-chart .webform-charts-colors label {
+  font-size: .875rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+#webform-charts-edit-chart .webform-charts-colors input[type="color"] {
+  max-width: 3rem;
+  height: 1.5rem;
+  padding: .1rem .125rem;
+  background: var(--c-bg-input);
+  margin: .5rem 0;
+}

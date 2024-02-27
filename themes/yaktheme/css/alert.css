@@ -1,0 +1,33 @@
+/* Alerts */
+#messages {
+  max-width: 800px;
+  padding: 0;
+}
+
+#messages .messages,
+div.messages {
+  margin: 2rem 0 0;
+  border: none;
+  padding: 1rem 1.5rem;
+}
+
+#messages .success,
+.messages.status  {
+  background: var(--c-success-lite);
+  border-left: 5px solid var(--c-success) !important;
+  color: var(--c-success-dark);
+}
+
+#messages .warning,
+.messages.warning {
+  background: var(--c-warning-lite);
+  border-left: 5px solid var(--c-warning) !important;
+  color: var(--c-warning-dark);
+}
+
+#messages .danger,
+.messages.error {
+  background: var(--c-danger-lite);
+  border-left: 5px solid var(--c-danger) !important;
+  color: var(--c-danger-dark);
+}

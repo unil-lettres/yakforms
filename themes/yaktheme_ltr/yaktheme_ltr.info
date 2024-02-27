@@ -1,0 +1,8 @@
+name = Yaktheme Lettres
+description = « Lettres » subtheme for Yakforms based on the TailwindCSS palette.
+package = Core
+version = 1.0
+core = 7.x
+base theme = yaktheme
+
+stylesheets[all][] = css/subtheme-ltr.css

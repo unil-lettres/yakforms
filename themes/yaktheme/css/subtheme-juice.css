@@ -1,0 +1,54 @@
+body.juice {
+  --c-bg: #FFE4E6;
+}
+
+.juice #main {
+  --c-title: #44403C;
+  --c-txt: #1C1917;
+
+  --c-bg-accent: #0F766E;
+  --c-txt-accent: #fff;
+  --c-highlighted: #A5F3FC;
+
+  --c-link: #EA580C;
+  --c-link-hover: #F97316;
+
+  --c-bd-primary: #EA580C;
+  --c-bd-page: #FB923C;
+  --c-bd-lite: #FED7AA;
+  --c-bd-lite2: #FDBA74;
+
+  --c-bg-lite: #fffdfa;
+  --c-bg-lite2: #FFF7ED;
+  --c-bg-lite3: #FFEDD5;
+
+  --c-txt-lite1: #292524;
+  --c-txt-lite2: #44403C;
+
+  /* Buttons / Alert */
+  --c-txt-btn: #fff;
+
+  --c-primary: #EA580C;
+  --c-primary-dark: #C2410C;
+
+  --c-secondary: #78716C;
+  --c-secondary-dark: #57534E;
+
+  /* Form components */
+  --c-txt-label: #44403C;
+
+  --c-bg-input: #fff;
+  --c-bd-input: #FDBA74;
+  --c-txt-input: #1C1917;
+  --c-bd-active: #FB923C;
+  --c-bg-checked: #F97316;
+
+  --c-bg-file: #FECDD3;
+  --c-txt-file: #0F172A;
+  --c-txt-file-icon: #FB7185;
+
+  --c-outline-shadow: #FFEDD5dd; /* p2 + alpha */
+
+  /* Footer */
+  --c-txt-signature: #C2410C;
+}

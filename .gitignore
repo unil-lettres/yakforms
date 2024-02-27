@@ -3,8 +3,8 @@
 docker-compose.override.yml
 
 # Ignore uploaded files
-files/*
-!files/.keep
+files/*/*
+!files/*/.keep
 
 # Other
 .idea

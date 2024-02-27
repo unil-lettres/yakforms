@@ -1,0 +1,168 @@
+/* Tabs */
+#main .section {
+  display: flex;
+  flex-direction: column;
+}
+
+#main .section > .tabs {
+  order: -1;
+  margin-bottom: 0;
+}
+
+/* .primary */
+#main ul.tabs.primary {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin-bottom: 0;
+  list-style: none;
+  background: transparent;
+  justify-content: flex-end;
+}
+
+#main ul.tabs.primary li {
+  background: transparent;
+  border: none;
+  float: none;
+  margin: 0;
+
+}
+
+#main ul.tabs.primary a {
+  background: var(--c-bg-input);
+  border: 1px solid var(--c-bd-lite2);
+  border-radius: 1rem;
+  color: var(--c-secondary);
+  display: block;
+  float: none;
+  height: auto;
+  line-height: initial;
+  font-size: .875rem;
+  margin: 0 0 0 .25rem;
+  padding: .25rem .5rem;
+  text-decoration: none;
+  text-shadow: none;
+}
+
+#main ul.tabs.primary a.active { /* not really tabs but actions links */
+  display: none;
+}
+
+.page-node #main ul.tabs.primary a::before {
+  background-color: var(--c-secondary);
+  display: inline-block;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  -webkit-mask-size: contain;
+  width: .875rem;
+  height: .875rem;
+  margin: -.25rem .25rem 0 0;
+  vertical-align: middle;
+}
+
+.page-node #main ul.tabs.primary a[href$="/edit"]::before {
+  content: '';
+  mask-image: var(--i-pencil);
+  -webkit-mask-image: var(--i-pencil);
+}
+
+.page-node #main ul.tabs.primary a[href$="/webform"]::before {
+  content: '';
+  mask-image: var(--i-edit);
+  -webkit-mask-image: var(--i-edit);
+}
+
+.page-node #main ul.tabs.primary a[href$="/webform-results"]::before {
+  content: '';
+  mask-image: var(--i-chart-pie);
+  -webkit-mask-image: var(--i-chart-pie);
+}
+
+.page-node #main ul.tabs.primary a[href$="/share"]::before {
+  content: '';
+  mask-image: var(--i-share-alt);
+  -webkit-mask-image: var(--i-share-alt);
+}
+
+/* .secondary */
+#main ul.tabs.secondary,
+#main ul.tabs.form-builder-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 1.25rem 0rem;
+  list-style: none;
+  background: transparent;
+  border-bottom: 1px solid var(--c-bd-lite);
+  padding-bottom: .5rem;
+}
+
+
+#main ul.tabs.secondary li,
+#main ul.tabs.form-builder-tabs li {
+  background: transparent;
+  border: none;
+  float: none;
+  margin: 0;
+  padding: 0;
+}
+
+#main ul.tabs.secondary a,
+#main ul.tabs.form-builder-tabs li {
+  background: transparent;
+  border: none;
+  border-radius: .2rem;
+  color: var(--c-secondary);
+  display: block;
+  float: none;
+  height: auto;
+  line-height: initial;
+  font-size: .875rem;
+  margin: .25rem;
+  padding: .25rem .5rem;
+  text-decoration: none;
+  text-shadow: none;
+}
+
+#main ul.tabs.secondary a.active,
+#main ul.tabs.form-builder-tabs .active { /* not really tabs but actions links */
+  background: var(--c-secondary);
+  color: var(--c-txt-btn);
+}
+
+/* Vertical tabs  only for admin */
+.vertical-tabs {
+  background: var(--c-bg-input);
+  border-color: var(--c-bd-lite);
+  margin-top: 2rem !important;
+}
+
+.vertical-tabs fieldset {
+  top: 0;
+  min-width: auto;
+}
+
+#main .vertical-tabs .fieldset-wrapper {
+  padding: .5rem 1rem;
+  overflow: auto;
+}
+
+.vertical-tabs ul.vertical-tabs-list li {
+  background: var(--c-bg-lite2);
+  border-color: var(--c-bd-lite);
+}
+
+.vertical-tabs ul.vertical-tabs-list li a,
+.vertical-tabs ul.vertical-tabs-list li a:hover,
+.vertical-tabs ul.vertical-tabs-list li a:focus,
+.vertical-tabs ul.vertical-tabs-list li a:hover strong,
+.vertical-tabs ul.vertical-tabs-list li a:focus strong {
+  text-decoration: none !important;
+}
+
+.vertical-tabs table img {
+  width: 100%;
+}

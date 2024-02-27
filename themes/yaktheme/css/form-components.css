@@ -1,0 +1,435 @@
+
+/* *************** *
+ * Form components *
+  **************** */
+.form-required {
+  color: var(--c-title); /* red by default but no danger here */
+}
+
+.form-item input.error,
+.form-item textarea.error,
+.form-item select.error {
+  border: 1px solid var(--c-danger);
+}
+
+/* ~ Labels ~ */
+.form-item label {
+  font-size: 1.25rem;
+  margin-top: 1rem;
+  margin-bottom: .25rem;
+  color: var(--c-txt-label);
+}
+
+.form-type-radio label,
+.form-type-checkbox label {
+  font-size: 1rem;
+}
+
+/* ~ Wysiwyg editor ~*/
+.wysiwyg-toggle-wrapper {
+  text-align: right;
+  font-size: .8rem;
+}
+.wysiwyg-toggle-wrapper a {
+  text-decoration: none;
+  color: var(--c-secondary);
+}
+
+.defaultSkin table.mceLayout,
+.defaultSkin .mceIframeContainer,
+.defaultSkin table.mceLayout tr.mceFirst td {
+  border-color: var(--c-bd-lite) !important;
+}
+
+.defaultSkin table.mceLayout tbody tr:nth-of-type(2) {
+  background: var(--c-bg-input);
+}
+
+.defaultSkin table.mceLayout tr.mceFirst * {
+  box-sizing: initial;
+}
+
+.defaultSkin table.mceLayout tr.mceLast {
+  display: none !important;
+}
+
+.defaultSkin td.mceToolbar {
+  background: var(--c-bg-lite1) !important;
+}
+
+/* ~ Description ~ */
+#main .description,
+#main .fieldset-description {
+  color: var(--c-txt-lite1);
+  font-size: 1rem;
+  font-style: normal;
+  margin: 0;
+}
+
+/* ~ Text / Textarea ~ */
+#main .form-text,
+#main .form-textarea { /* = .form-control */
+  padding: .375rem .75rem;
+  border-radius: .25rem;
+  border-color: var(--c-bd-input);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  width: 100%;
+}
+
+#main .form-textarea {
+  border-radius: .25rem .25rem 0 0;
+}
+
+#main .form-text:focus,
+#main .form-textarea:focus {
+  border-color: var(--c-bd-active);
+  outline: 0;
+  box-shadow: 0 0 0 .2rem var(--c-outline-shadow);
+}
+
+.resizable-textarea .grippie {
+  background-color: var(--c-bg-lite2);
+  border-color: var(--c-bd-lite);
+}
+
+/* ~ Select ~ */
+#main select {
+  display: block;
+  padding: .375rem 2.25rem .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--c-txt);
+  background-color: var(--c-bg-input);
+  background-image: var(--i-chevron-down);
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 16px 12px;
+  border: 1px solid var(--c-bd-input);
+  border-radius: .25rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+}
+
+#main select:focus {
+  outline: 0;
+  box-shadow: 0 0 0 .2rem var(--c-outline-shadow);
+}
+
+#main select.minute,
+#main select.hour,
+#main select.day,
+#main select.month,
+#main select.year {
+  display:inline-block;
+  width: auto;
+}
+
+/* ~ Checkbox / Radio ~ */
+.form-type-radio,
+.form-type-checkbox {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.webform-grid .form-type-radio {
+  display: block;
+}
+
+.form-type-radio label,
+.form-type-checkbox label {
+  margin-top: 0 !important;
+  margin-left: .5rem;
+  width: calc(100% - 2rem);
+}
+
+.form-type-radio .description,
+.form-type-checkbox .description {
+  width: 100%;
+  margin-left: 1.75rem !important; /* label ml + radio w */
+}
+
+input.form-checkbox,
+input.form-radio {
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+  background-color: var(--c-bg-input);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: 1px solid var(--c-bd-input);
+  border-radius: .25rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+}
+
+input.form-checkbox:checked,
+input.form-radio:checked[type=radio] {
+  background-color: var(--c-bg-checked);
+  border-color: var(--c-bg-checked);
+}
+
+input.form-checkbox:focus,
+input.form-radio:focus {
+  outline: 0;
+  box-shadow: 0 0 0 .2rem var(--c-outline-shadow);
+}
+
+input.form-radio {
+  border-radius: 50%;
+  margin: 0;
+}
+
+input.form-checkbox:checked {
+  background-image: var(--i-check);
+}
+
+input.form-radio:checked[type=radio] {
+  background-image: var(--i-radio);
+}
+
+/* ~ Grid ~ */
+.webform-component-grid table {
+  border: none;
+}
+
+.webform-component-grid thead tr {
+  background: none;
+}
+
+.webform-component-grid thead th {
+  background: none;
+  border-bottom: 2px solid var(--c-bd-primary);
+}
+
+/* ~ Fieldset ~ */
+#main fieldset {
+  background: transparent;
+  border: none;
+  margin: 0;
+  border-radius: 0;
+  padding: 0;
+  top: initial;
+}
+
+#main fieldset .fieldset-wrapper {
+  padding: .5rem 0;
+  margin-top: 0;
+}
+
+#main fieldset legend {
+  background: none;
+  border: none;
+  border-bottom: 2px solid var(--c-bd-primary);
+  border-radius: 0 !important;
+  color: var(--c-txt-label);
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: inherit;
+  height: auto;
+  text-indent: 0;
+  text-shadow: none;
+  top: auto;
+  left: auto;
+  position: relative;
+}
+
+#main fieldset.collapsed {
+  min-height: 2.5rem;
+}
+
+#main fieldset.collapsible {
+  margin-bottom: 1rem;
+}
+
+#main fieldset.collapsed legend {
+  border-color: transparent;
+}
+
+#main fieldset.collapsible .fieldset-legend {
+  background: none;
+  padding: 0;
+}
+
+#main fieldset legend a {
+  text-decoration: none;
+}
+
+#main fieldset legend a:hover,
+#main fieldset legend a:focus {
+  color: var(--c-link-hover);
+}
+
+#main fieldset.collapsible .fieldset-legend a::before {
+  display: inline-block;
+  content: var(--i-chevron-down);
+  line-height: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+#main fieldset.collapsed .fieldset-legend a::before {
+  content: var(--i-chevron-left);
+}
+
+/* ~ Image / File widget ~ */
+.image-widget,
+.form-type-managed-file .file-widget,
+.form-item .form-managed-file {
+  background: var(--c-bg-file);
+  border-radius: .5rem;
+  color: var(--c-txt-file);
+  padding: 1rem;
+  position: relative;
+  text-align: center;
+}
+
+.image-widget::before,
+.form-type-managed-file .file-widget::before,
+.form-item .form-managed-file::before {
+  content: '';
+  background-color: var(--c-txt-file-icon);
+  display: inline-block;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  -webkit-mask-size: contain;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  right: 1rem;
+}
+
+.form-type-managed-file .file-widget::before,
+.form-item .form-managed-file::before {
+  mask-image: var(--i-file);
+  -webkit-mask-image: var(--i-file);
+}
+
+
+.form-type-managed-file .image-widget::before {
+  mask-image: var(--i-image);
+  -webkit-mask-image: var(--i-image);
+}
+
+.image-widget .form-file,
+.file-widget .form-file,
+.form-item .form-managed-file .form-file {
+  padding: .75rem;
+  display: block;
+  margin: .25rem auto;
+}
+
+.image-widget .image-widget-data {
+  float: none;
+}
+
+.image-widget-data .file-icon {
+  display: none;
+}
+
+.file-widget .file-icon {
+  width: auto;
+  vertical-align: middle;
+  display: none; /* ugly old icon maybe not needed */
+}
+
+.file-widget .file a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.image-widget-data .form-item,
+.form-type-managed-file .file-widget .form-item {
+  text-align: left;
+}
+
+.image-widget-data .form-item:last-of-type {
+  margin-bottom: 0;
+}
+
+.image-widget-data .description,
+.image-widget-data a,
+.form-type-managed-file .file-widget-data .description,
+.form-type-managed-file .file-widget-data a {
+  color: var(--c-txt-file) !important;
+}
+
+.image-widget .image-preview {
+  display:block;
+  margin: 0 auto;
+  float: none;
+  padding: 0;
+  width: fit-content;
+}
+
+/* ~ File management ~ */
+.fieldset-wrapper label { /* ??? */
+  font-size: 1rem;
+}
+
+table .form-type-managed-file label,
+.fieldset-wrapper table label {
+  font-size: .875rem;
+  margin-top: .5rem;
+  margin-bottom: 0;
+}
+
+#main table .form-managed-file .description {
+  font-size: .75rem;
+  white-space: normal;
+}
+
+#main table .form-managed-file .form-item {
+  margin-left: 1.5rem;
+}
+
+#main table .form-managed-file .form-text { /* .form-control-sm */
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  border-radius: .2rem;
+  width: 100%;
+}
+
+#main .field-type-file table .form-submit {
+  background: var(--c-secondary) var(--i-trash) no-repeat center center;
+  background-size: 1rem;
+  border-radius: 50%;
+  border: none;
+  display: block;
+  font-size: 0px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+#main .field-type-file table .tabledrag-handle {
+  margin-left: 0;
+}
+
+/* ~ Handle ~ */
+#main table .form-managed-file .tabledrag-handle .handle,
+#main .tabledrag-handle .handle {
+  background-color: var(--c-secondary);
+  background-image: none;
+  mask: var(--i-arrows) no-repeat center center;
+  -webkit-mask: var(--i-arrows) no-repeat center center;
+  width: 1rem;
+  height: 1rem;
+  margin: .125rem .5rem 0 0;
+  padding: 0;
+}
+
+#edit-field-form1-file-und-table .tabledrag-handle {
+  margin-left: 0;
+}

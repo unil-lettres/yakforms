@@ -1,0 +1,40 @@
+
+name = Yaktheme
+description = A flexible, recolorable theme with many regions. Based on Bartik.
+package = Core
+version = VERSION
+core = 7.x
+base theme = bartik
+
+stylesheets[all][] = css/yaktheme.css
+stylesheets[all][] = css/layout.css
+stylesheets[all][] = css/style.css
+stylesheets[print][] = css/print.css
+
+scripts[] = js/yaktheme.js
+regions[header] = Header
+regions[help] = Help
+regions[page_top] = Page top
+regions[page_bottom] = Page bottom
+regions[highlighted] = Highlighted
+
+regions[featured] = Featured
+regions[content] = Content
+regions[sidebar_first] = Sidebar first
+regions[sidebar_second] = Sidebar second
+
+regions[footer] = Footer
+
+settings[shortcut_module_link] = 0
+
+settings[toggle_logo] = 0
+settings[toggle_name] = 0
+settings[toggle_slogan] = 0
+
+
+
+; Information added by Drupal.org packaging script on 2015-10-21
+version = "7.41"
+project = "drupal"
+datestamp = "1445457729"
+

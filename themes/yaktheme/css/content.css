@@ -1,0 +1,117 @@
+
+* {
+  font-family: Open Sans;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+.html {
+  background-color: var(--c-bg);
+  color: var(--c-txt);
+  font-size: 100%;
+}
+
+/* Links */
+a, a:link, a:visited {
+  color: var(--c-link);
+  text-decoration: underline;
+}
+
+a:hover,
+a:focus {
+  color: var(--c-link-hover);
+}
+
+/* Titles */
+h1, h2, h3, h4, h5, h6, h1 > *, h1#page-title {
+  font-family: 'Quando', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  color: var(--c-title);
+  margin-top: 0;
+  margin-bottom: .5rem;
+  line-height: 1.2;
+}
+
+/* h1 = h2 BS5, h2 = h3 BS5, etc */
+h1, h1#page-title { font-size: calc(1.325rem + .9vw); }
+h2 { font-size: calc(1.3rem + .6vw); }
+h3 { font-size: calc(1.275rem + .3vw); }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: .875rem; }
+
+@media (min-width: 1200px) {
+  h1, h1#page-title { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.5rem; }
+}
+
+h1#page-title {
+  margin-top: 1rem;
+}
+
+/* Images */
+.front img {
+  width: 100%;
+}
+
+/*  Tables */
+table {
+  width: 100%;
+  font-size: .875rem;
+  margin: 1rem 0;
+}
+
+table,
+.webform-select-list-format table {
+  border-collapse: collapse;
+  border: 1px solid var(--c-bd-lite);
+}
+
+.table > :not(caption) > * > *,
+tr td,
+tr th {
+  padding: .5rem .5rem;
+  background: var(--c-bg-input);
+  border: none;
+}
+
+table tr th,
+table tr th a,
+table tr th a:hover {
+  color: var(--c-txt-label);
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+table thead th {
+  background: var(--c-bg-lite2);
+  border-bottom: 1px solid var(--c-bd-lite);
+}
+
+table tbody td {
+  background: transparent;
+  border-bottom: 1px solid var(--c-bd-lite);
+}
+
+tr.even, tr.odd {
+  border: none;
+  background: transparent;
+}
+
+.webform-select-list-format table,
+.webform-select-list-format th,
+.webform-select-list-format td {
+  border-color: var(--c-bd-lite);
+}
+
+/* Definitions */
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin-bottom: .5rem;
+}

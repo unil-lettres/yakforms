@@ -1,0 +1,312 @@
+/* Form builder */
+#form-builder .form-builder-wrapper {
+  margin: .5rem 0;
+}
+
+#form-builder .form-builder-element {
+  margin: .25rem .5rem;
+}
+
+#form-builder .form-builder-wrapper.highlighted {
+  background-color: var(--c-highlighted);
+}
+
+#form-builder .form-builder-placeholder {
+  border-color: transparent; /* fix blue border on drop */
+}
+
+#form-builder .form-builder-placeholder-hover {
+  border-color: var(--c-bd-lite);
+}
+
+#form-builder .form-builder-links,
+#form-builder .form-builder-bottom-links {
+  right: 0;
+}
+
+#form-builder .form-builder-bottom-links {
+  right: 0;
+  bottom: .25rem;
+}
+
+#form-builder .form-builder-links a,
+#form-builder .form-builder-bottom-links a {
+  background-color: var(--c-secondary);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 12px 12px;
+  border-radius: 50%;
+  padding: .25rem;
+  width: .75rem;
+  height: .75rem;
+  margin: -.125rem .125rem;
+}
+
+#form-builder .form-builder-links .configure {
+  background-color: var(--c-primary);
+  background-image: var(--i-pencil)
+}
+
+#form-builder .form-builder-links .remove {
+  background-image: var(--i-trash);
+}
+
+#form-builder .form-builder-bottom-links .clone {
+  background-image: var(--i-clone)
+}
+
+#form-builder-field-palette ul li {
+  border: 1px dashed var(--c-bd-lite);
+  font-size: 0.75rem;
+  margin-left: 0;
+  margin-right: 4px;
+  padding: .25rem .25rem .25rem 1.75rem;
+  width: 78px;
+}
+
+#form-builder-fields *,
+.form-builder-wrapper *:not(input):not(textarea):not(select):not(fieldset) {
+  box-sizing: content-box;
+}
+
+#form-builder-wrapper .form-actions {
+  margin: 0;
+}
+
+#form-builder-wrapper.with-palette #form-builder {
+  padding-right: 0;
+  border: none;
+}
+
+#form-builder .form-builder-wrapper form {
+  border-top: 1px dashed var(--c-bd-lite);
+  background: var(--c-bg-lite2);
+}
+
+#form-builder .form-builder-active {
+  border: 1px solid var(--c-bd-lite);
+}
+
+#form-builder-field-configure a.close { /* Close link replace by a chevron-down */
+  background-image: var(--i-chevron-down);
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 16px 12px;
+  font-size: 0;
+  height: 16px;
+  width: 16px;
+  text-decoration: none;
+  transform: rotate(180deg);
+}
+
+#form-builder-field-configure ul.form-builder-tabs.tabs {
+  margin: 0 .5rem .5rem;
+  padding-bottom: 0;
+  float: none;
+}
+
+#form-builder-wrapper.with-palette #form-builder-fields {
+  padding: 0;
+  width: 232px;
+}
+
+#form-builder-field-palette .form-builder-fields {
+  padding: .5rem 0;
+  width: auto;
+}
+
+/* field sidebar on two column */
+#form-builder-wrapper.with-palette #form-builder {
+  margin-right: 252px;
+}
+
+/* field sidebar on one column */
+@media (max-width: 768px) {
+  #form-builder-wrapper.with-palette #form-builder-fields {
+    width: 112px;
+  }
+
+  #form-builder-wrapper.with-palette #form-builder {
+    margin-right: 132px;
+  }
+}
+
+/* form components & text smaller in field config */
+#webform-charts-edit-chart .chart-form select,
+#main .fieldset-wrapper select,
+#main .fieldset-wrapper .form-text,
+#main .fieldset-wrapper .form-textarea,
+#form-builder-field-configure select,
+#form-builder-field-configure .form-text,
+#form-builder-field-configure .form-textarea {
+  border-radius: .2rem;
+  font-size: .875rem;
+  padding: .25rem .5rem;
+}
+
+#main .fieldset-wrapper select {
+  padding-right: 2.25rem;
+}
+
+#webform-charts-edit-chart .form-checkbox,
+#webform-charts-edit-chart .form-radio,
+#main .fieldset-wrapper .form-checkbox,
+#main .fieldset-wrapper .form-radio,
+#form-builder-field-configure .form-checkbox,
+#form-builder-field-configure .form-radio {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+
+#webform-charts-edit-chart .form-type-checkbox label,
+#webform-charts-edit-chart .form-type-radio label,
+#main .fieldset-wrapper .form-type-radio label,
+#main .fieldset-wrapper .form-type-checkbox label,
+#main .fieldset-wrapper .description,
+#main .fieldset-wrapper table tr th,
+#main .fieldset-wrapper table tr th a,
+#form-builder-field-configure .form-type-radio label,
+#form-builder-field-configure .form-type-checkbox label {
+  font-size: .875rem;
+}
+
+#main fieldset fieldset fieldset legend { /* 3 levels of fieldset :scream: */
+  border-width: 1px;
+  font-size: 1rem;
+}
+
+#form-builder .form-builder-wrapper .confirmation {
+  font-size: .875rem;
+}
+
+#form-builder .form-builder-wrapper .confirmation .form-submit,
+#form-builder .form-builder-wrapper .confirmation #edit-cancel--2 {
+  border-radius: .2rem;
+  font-size: .75rem;
+  padding: .25rem .5rem;
+}
+
+#form-builder fieldset.form-builder-group {
+  border: none;
+  background-color: transparent;
+}
+
+#form-builder fieldset.form-builder-group .fieldset-wrapper {
+  margin: 0;
+  padding: 0 .5rem;
+}
+
+#form-builder .form-builder-group .option-settings .fieldset-wrapper {
+  padding: .5rem 0;
+}
+
+#form-builder .form-item label {
+  margin-top: .5rem;
+}
+
+#form-builder #edit-maxlength {
+  width: auto;
+}
+
+#form-builder .description {
+  font-size: .8rem;
+}
+
+#form-builder .form-options .remove-default a,
+#form-builder .form-options .form-option-add a,
+#form-builder .form-options .form-options-manual a {
+  font-size: .8rem;
+  text-decoration: none;
+  color: var(--c-secondary);
+}
+
+#form-builder .option-actions-cell {
+  padding: 4px 0;
+}
+#form-builder .options-widget .add,
+#form-builder .options-widget .remove {
+  background-image: none;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+}
+
+#form-builder .options-widget .add {
+  background-color: var(--c-success);
+  mask-image: var(--i-plus);
+  -webkit-mask-image: var(--i-plus);
+  margin-right: .5rem;
+}
+
+#form-builder .options-widget .add:hover,
+#form-builder .options-widget .add:focus {
+  background-color: var(--c-success-dark);
+}
+
+#form-builder .options-widget .remove {
+  background-color: var(--c-secondary); /* not a danger action */
+  mask-image: var(--i-trash);
+  -webkit-mask-image: var(--i-trash);
+  width: .75rem;
+  height: .75rem;
+  margin: .125rem 0;
+}
+
+#form-builder .options-widget .remove:hover,
+#form-builder .options-widget .remove:focus {
+  background-color: var(--c-secondary-dark);
+}
+
+#form-builder .form-option-add a {
+  background: none;
+}
+
+#form-builder .remove-default a::before,
+#form-builder .form-option-add a::before,
+#form-builder .form-options-manual a::before {
+  content: '';
+  display: inline-block;
+  margin-right: .25rem;
+  mask-repeat: no-repeat;
+  mask-position: center center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  width: .75rem;
+  height: .75rem;
+  vertical-align: middle;
+}
+
+#form-builder .form-option-add a::before {
+  background-color: var(--c-success);
+  margin-top: -.25rem;
+  mask-image: var(--i-plus);
+  -webkit-mask-image: var(--i-plus);
+}
+
+#form-builder .form-option-add a:hover::before,
+#form-builder .form-option-add a:focus::before {
+  background-color: var(--c-success-dark);
+}
+
+#form-builder .form-options-manual a::before {
+  background-color: var(--c-secondary);
+  margin-top: -.125rem;
+  mask-image: var(--i-keyboard);
+  -webkit-mask-image: var(--i-keyboard);
+}
+
+#form-builder .remove-default a::before {
+  background-color: var(--c-secondary);
+  margin-top: -.125rem;
+  mask-image: var(--i-minus-square);
+  -webkit-mask-image: var(--i-minus-square);
+}
+
+#form-builder-webform-save-form {
+  margin-bottom: 0; /* margin-bottom: 200px needed ? */
+}

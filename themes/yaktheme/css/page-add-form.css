@@ -1,0 +1,185 @@
+
+/* Add form */
+.page-node-add-form1 #main {
+  margin-top: 4rem;
+}
+
+#expiration-date-subtitle {
+  color: var(--c-secondary);
+  text-decoration: none;
+  position: absolute;
+  right: 0;
+  top: -.5rem;
+}
+
+#expiration-date-subtitle::before {
+  content: '';
+  background-color: var(--c-secondary);
+  mask-image: var(--i-clock);
+  mask-repeat: no-repeat;
+  mask-position: center center;
+  mask-size: 1rem;
+  -webkit-mask-image: var(--i-clock);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center center;
+  -webkit-mask-size: 1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-right: .25rem;
+  vertical-align: middle;
+  margin-top: -.25rem;
+  display: inline-block;
+}
+
+#edit-body fieldset.filter-wrapper { /* description html format not userfriendly */
+  display: none;
+}
+
+#edit-field-form1-image,
+#edit-field-form1-file,
+#edit-field-form1-expiration,
+#edit-field-form1-results-public,
+#edit-field-form1-template {
+  border-top: 1px solid var(--c-bd-lite);
+  padding-top: 0;
+  margin-top: 1rem;
+}
+
+#edit-field-form1-file,
+#edit-field-form1-expiration {
+  padding-top: 1rem;
+}
+
+#edit-field-form1-file legend,
+#edit-field-form1-expiration legend,
+.not-logged-in .captcha legend { /* 1 field = not realy a fieldset */
+  border: none !important;
+}
+
+.not-logged-in .captcha {
+  margin: 0;
+}
+
+/*
+  Date expiration
+  & Results access
+  & Link as a template
+ */
+#edit-field-form1-expiration .fieldset-wrapper,
+#edit-field-form1-results-public .form-item,
+#edit-field-form1-results-access .form-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+#edit-field-form1-expiration .fieldset-description,
+#edit-field-form1-results-public .description,
+#edit-field-form1-results-access .description {
+  background: var(--c-bg-lite3);
+  border-radius: .25rem;
+  padding: 1rem 1.5rem;
+  width: 55%;
+  order: 2;
+  align-self: flex-end;
+}
+
+#edit-field-form1-results-public label,
+#edit-field-form1-results-access label,
+#edit-field-form1-template label {
+  width: 100%;
+  margin-bottom: .5rem;
+}
+
+#edit-field-form1-expiration .container-inline-date .date-padding {
+  float: none;
+}
+
+#edit-field-form1-results-public select {
+  width: 35%;
+}
+
+#edit-field-form1-expiration .form-text {
+  width: 100%;
+  margin: 0;
+}
+
+#edit-field-form1-expiration .date-no-float,
+#edit-field-form1-results-public select,
+#edit-field-form1-results-access .form-text {
+  width: 42%;
+  margin-bottom: .75rem;
+}
+
+#edit-field-form1-expiration .form-item {
+  width: 100%;
+  margin: 0;
+}
+
+#edit-field-form1-expiration .form-item {
+  float: none;
+}
+
+@media (max-width: 768px) {
+  #edit-field-form1-expiration .date-no-float,
+  #edit-field-form1-results-public select,
+  #edit-field-form1-results-access .form-text,
+
+  #edit-field-form1-expiration .fieldset-description,
+  #edit-field-form1-results-public .description,
+  #edit-field-form1-results-access .description {
+    width: 100%;
+  }
+}
+
+#edit-field-form1-expiration .date-no-float .date-padding {
+  padding: 0;
+}
+
+/* List as a template */
+#edit-field-form1-template .form-type-checkbox {
+  margin: 1rem;
+  position: absolute;
+  left: 50%;
+  margin-left: calc(-280px + 1.5rem);
+}
+
+@media (max-width: 768px) {
+  #edit-field-form1-template .form-type-checkbox {
+    left: 0;
+    margin-left: 1.5rem;
+  }
+}
+
+#edit-field-form1-template .description {
+  background: var(--c-bg-lite3);
+  border-radius: .25rem;
+  padding: 1rem 1.5rem 1rem 5rem;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Preview */
+.preview .node {
+  background-color: var(--c-bg-input);
+  border: 1px solid var(--c-bd-lite);
+  border-radius: .25rem;
+  margin: 0;
+  padding: .5rem 1rem;
+}
+
+.preview .node h2 {
+  padding: 0;
+  margin: .75rem 0 .5rem;
+}
+
+.preview h3,
+.preview .node-teaser {
+  /*
+  Teaser = Full
+  so duplicate preview is removed
+  TODO: find a way to remove message status about <!-- break -->
+  */
+  display:none;
+}

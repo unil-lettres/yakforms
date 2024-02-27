@@ -38,22 +38,23 @@ RUN composer global require drush/drush:$DRUSH_VERSION && \
 # Install needed php extensions
 RUN apt-get clean; docker-php-ext-install ldap
 
+# Increase the upload file size
+COPY ./conf/php-uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 # Install Yakforms profile
 RUN curl https://framagit.org/yakforms/yakforms/-/archive/$YAK_COMMIT/yakforms-$YAK_COMMIT.tar.gz?path=profiles/yakforms_profile -o /tmp/yakforms-$YAK_COMMIT.tar.gz && \
     tar -xvf /tmp/yakforms-$YAK_COMMIT.tar.gz --strip-components=2 -C /var/www/html/profiles/ && \
     rm -r /tmp/*
 
 # Replace files with issues by fixed ones
-COPY ./fix/page.tpl.php /var/www/html/profiles/yakforms_profile/themes/yaktheme/templates/page.tpl.php
 COPY ./fix/yakforms.admin.inc /var/www/html/profiles/yakforms_profile/modules/yakforms/includes/yakforms.admin.inc
 COPY ./fix/yakforms.module /var/www/html/profiles/yakforms_profile/modules/yakforms/yakforms.module
 COPY ./fix/Form.php /var/www/html/profiles/yakforms_profile/modules/form_builder/modules/webform/src/Form.php
 COPY ./fix/file.inc /var/www/html/profiles/yakforms_profile/modules/webform/components/file.inc
 COPY ./fix/webform_charts.module /var/www/html/profiles/yakforms_profile/modules/webform_charts/webform_charts.module
-COPY ./fix/yaktheme.js /var/www/html/profiles/yakforms_profile/themes/yaktheme/js/yaktheme.js
-COPY ./fix/cleaning.css /var/www/html/profiles/yakforms_profile/themes/yaktheme/css/cleaning.css
-COPY ./fix/header.css /var/www/html/profiles/yakforms_profile/themes/yaktheme/css/header.css
 COPY ./fix/bootstrap.inc /var/www/html/includes/bootstrap.inc
+COPY ./fix/riddler.install /var/www/html/profiles/yakforms_profile/modules/riddler/riddler.install
+COPY ./fix/webform_charts.tokens.inc /var/www/html/profiles/yakforms_profile/modules/webform_charts/webform_charts.tokens.inc
 
 # Replace homepage templates
 COPY ./views/frontpage-fr.html /var/www/html/profiles/yakforms_profile/modules/yakforms/includes/html/fr/frontpage.html
@@ -61,6 +62,7 @@ COPY ./views/frontpage-en.html /var/www/html/profiles/yakforms_profile/modules/y
 
 # Create directory to store uploaded form files
 RUN mkdir -p /var/www/html/sites/default/files/forms/
+RUN mkdir -p /var/www/html/sites/default/files/webform/
 RUN chown -R www-data:www-data /var/www/html/sites/default/files/
 
 # Copy the script to modify the default Drupal settings into the image, make it executable and run it

@@ -20,13 +20,13 @@ Please make sure to copy & rename the **example.env** file to **.env**.
 
 You can replace the values if needed to match you server & environment.
 
-### Build & run
+## Build & run
 
 Build & run all the containers for this project.
 
 ``docker-compose up`` (add -d if you want to run in the background and silence the logs)
 
-### Frontends
+## Frontend
 
 To access the main application please use the following link.
 
@@ -91,3 +91,9 @@ Use the following path: `/admin/modules`
 
 - "SMTP Authentication Support"
 - If needed also "Active Directory Integration / LDAP Integration - NTLM & Kerberos Login"
+
+# Update instructions
+
+Everything in `/themes`, `/modules`, `/libraries` & `/files` is managed by composer and will be updated on the next `docker compose up`.
+
+Files in the `/fix` & `/views` folders are backed into the docker image, they will either be updated on the next `docker compose build` / `docker compose pull`, or stored in the database during the first setup and persist in the application database volume (should be updated manually).

@@ -72,6 +72,11 @@ div#edit-field-form1-image .description {
     display: none;
 }
 
+/* Hide the broken confirmation email button */
+input#edit-confirmation-add-button {
+    display: none;
+}
+
 /* Use Open Sans for all headings */
 h1, h2, h3, h4, h5, h6, h1 > *, h1#page-title {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;

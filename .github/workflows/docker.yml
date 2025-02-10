@@ -17,6 +17,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
+          # Lock QEMU version to 7.x (not working with later versions)
           image: docker.io/tonistiigi/binfmt:qemu-v7.0.0-28
 
       - name: Set up Docker Buildx

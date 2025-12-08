@@ -24,7 +24,7 @@ You can replace the values if needed to match you server & environment.
 
 Build & run all the containers for this project.
 
-``docker-compose up`` (add -d if you want to run in the background and silence the logs)
+``docker compose up`` (add -d if you want to run in the background and silence the logs)
 
 ## Frontend
 
@@ -46,7 +46,7 @@ Don't forget to also copy & rename the **example.env** file to **.env**, and cha
 
 Build & run all the containers for this project:
 
-`docker-compose up -d`
+`docker compose up -d`
 
 Use a reverse proxy configuration to map the url to port `8787`.
 

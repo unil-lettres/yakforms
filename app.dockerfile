@@ -3,7 +3,7 @@ FROM drupal:7-php7.4-fpm-bullseye
 # https://framagit.org/yakforms/yakforms
 ENV YAK_COMMIT=4081c97043d923c8fdf285fc17cae62c48a78c5a
 
-ENV COMPOSER_VERSION=2.6.6
+ENV COMPOSER_VERSION=2.2.28
 ENV PSQL_CLIENT_VERSION=16
 # Drush 8.x is the latest Drupal 7 compatible version
 ENV DRUSH_VERSION=8.4

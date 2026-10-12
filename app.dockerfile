@@ -8,21 +8,25 @@ ENV PSQL_CLIENT_VERSION=16
 # Drush 8.x is the latest Drupal 7 compatible version
 ENV DRUSH_VERSION=8.4
 
-# Install needed packages
-RUN apt update &&  \
-    apt install -y \
-    nano \
-    curl \
-    wget \
-    unzip \
-    lsb-release \
-    gnupg2 \
-    libldap2-dev
+# Update repositories and install additional packages.
+# Use archived Debian Bullseye repositories since the default
+# ones are not available anymore for the base image we use.
+RUN sed -i \
+      -e 's|http://deb.debian.org/debian-security|http://archive.debian.org/debian-security|g' \
+      -e 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' \
+      -e 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' \
+      /etc/apt/sources.list \
+    && apt-get -o Acquire::Check-Valid-Until=false update \
+    && apt-get install -y --no-install-recommends \
+        nano curl wget unzip lsb-release gnupg2 libldap2-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install specific version of the PostgreSQL client
-RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
+# Use the archived PGDG repository since Bullseye has been removed
+# from apt.postgresql.org.
+RUN sh -c 'echo "deb https://apt-archive.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && \
     curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
-    apt update && \
+    apt -o Acquire::Check-Valid-Until=false update && \
     apt install -y postgresql-client-$PSQL_CLIENT_VERSION
 
 # Install specific version of Composer

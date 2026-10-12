@@ -6,21 +6,18 @@ services:
   yakforms-web:
     restart: unless-stopped
     deploy:
-      mode: global
       resources:
         limits:
           memory: 200M
   yakforms-app:
     restart: unless-stopped
     deploy:
-      mode: global
       resources:
         limits:
           memory: 500M
   yakforms-postgres:
     restart: unless-stopped
     deploy:
-      mode: global
       resources:
         limits:
           memory: 500M

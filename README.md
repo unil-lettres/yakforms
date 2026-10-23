@@ -97,3 +97,7 @@ Use the following path: `/admin/modules`
 Everything in `/themes`, `/modules`, `/libraries` & `/files` is managed by composer and will be updated on the next `docker compose up`.
 
 Files in the `/fix` & `/views` folders are backed into the docker image, they will either be updated on the next `docker compose build` / `docker compose pull`, or stored in the database during the first setup and persist in the application database volume (should be updated manually).
+
+# Docker images
+
+The Dockerfile extracts the application files from a pre-packaged Docker image, and runs them on a patched PHP Apache base. This is needed since the project is not maintained anymore and the stack is frozen.

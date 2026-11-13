@@ -1,5 +1,6 @@
 # Ignore configuration files
 .env
+db.env
 docker-compose.override.yml
 
 # Ignore uploaded files

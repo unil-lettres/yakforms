@@ -12,13 +12,22 @@ It is not actively maintained anymore, we'll keep the stack frozen until a bette
 
 A working [Docker](https://docs.docker.com/engine/install/) installation is mandatory.
 
-## Docker environment file
+## Environment files
 
-Please make sure to copy & rename the **example.env** file to **.env**.
+Make sure to copy & rename the following environment files.
 
-``cp example.env .env``
+```bash
+cp env.example .env
+cp db.env.example db.env
+```
 
 You can replace the values if needed to match you server & environment.
+
+Make sure to copy & rename the **docker-compose.override.yml.dev** file to **docker-compose.override.yml**.
+
+``cp docker-compose.override.yml.dev docker-compose.override.yml``
+
+You can replace the values if needed, but the default ones should work for local development.
 
 ## Build & run
 
@@ -26,7 +35,7 @@ Build & run all the containers for this project.
 
 ``docker compose up`` (add -d if you want to run in the background and silence the logs)
 
-## Frontend
+## Frontends
 
 To access the main application please use the following link.
 
@@ -36,17 +45,30 @@ The first time you access the application, you will be redirected to the install
 
 # Deployment with Docker
 
+## Environment files
+
+Make sure to copy & rename the following environment files.
+
+```bash
+cp env.example .env
+cp db.env.example db.env
+```
+
+You should replace the values since the default ones are not ready for production.
+
 Copy & rename the **docker-compose.override.yml.prod** file to **docker-compose.override.yml**.
 
 `cp docker-compose.override.yml.prod docker-compose.override.yml`
 
 You can replace the values if needed, but the default ones should work for production.
 
-Don't forget to also copy & rename the **example.env** file to **.env**, and change the values for the production environment.
+## Installation & configuration
 
-Build & run all the containers for this project:
+Build & run all the containers for this project.
 
 `docker compose up -d`
+
+## Reverse proxy
 
 Use a reverse proxy configuration to map the url to port `8787`.
 
@@ -100,4 +122,9 @@ Files in the `/fix` & `/views` folders are backed into the docker image, they wi
 
 # Docker images
 
-The Dockerfile extracts the application files from a pre-packaged Docker image, and runs them on a patched PHP Apache base. This is needed since the project is not maintained anymore and the stack is frozen.
+The Dockerfile extracts the application files from a pre-packaged Docker image, and runs them on a CVE-patched PHP 7.4 base image. This is needed since the project is not maintained anymore and the stack is frozen.
+
+GitHub Actions workflows generate Docker image tags based on these events:
+- Push to `development`: `dev-latest`, `stage-latest`
+- Push to `master`: `latest`
+- Push a git tag: `vX.Y.Z` (immutable)

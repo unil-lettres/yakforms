@@ -10,6 +10,7 @@ services:
         limits:
           memory: 200M
   yakforms-app:
+    image: unillett/yakforms:latest
     restart: unless-stopped
     deploy:
       resources:

@@ -1,0 +1,24 @@
+# The following configuration is used for staging in conjunction with the
+# main docker-compose.yml. Please follow the instructions in the README.md
+# file to deploy the application.
+
+services:
+  yakforms-web:
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+  yakforms-app:
+    image: unillett/yakforms:stage-latest
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+  yakforms-postgres:
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 500M
